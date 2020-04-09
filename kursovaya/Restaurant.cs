@@ -9,7 +9,7 @@ namespace kursovaya
     {
         private string rest_name;
         private List<Dish> dishes;
-        private string rest_id;
+        private string rest_id_p;
 
         public Restaurant()
         {
@@ -18,12 +18,12 @@ namespace kursovaya
 
         public void set_rest_id(string new_id)
         {
-            rest_id = new_id;
+            rest_id_p = new_id;
         }
 
         public string get_rest_id()
         {
-            return rest_id;
+            return rest_id_p;
         }
 
         public void set_rest_name(string new_name)

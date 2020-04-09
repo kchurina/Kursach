@@ -15,8 +15,9 @@ namespace kursovaya
             fields.Add(new Name_field());
             fields.Add(new Cost_field());
             fields.Add(new Nmb_field());
-            fields.Add(new DishOrdId_field());
-            fields.Add(new DishRestId_field());
+            fields.Add(new Order_id_p());
+            fields.Add(new Rest_Id_f());
+            fields.Add(new Dish_id_p());
         }
 
         public List<Dish_fields> get_all_dish_fields()
@@ -34,34 +35,14 @@ namespace kursovaya
             return fields.Count;
         }
 
-        public Dish_fields get_id_field()
-        {
-            return fields[3];
-        }
-
-        public void set_id_field(DishOrdId_field new_field)
-        {
-            fields[3] = new_field;
-        }
-
         public Dish_fields get_name_field()
         {
             return fields[0];
         }
-
-        public void set_name_field(Name_field new_field)
-        {
-            fields[0] = new_field;
-        }
-
+        
         public Dish_fields get_cost_field()
         {
             return fields[1];
-        }
-
-        public void set_cost_field(Cost_field new_field)
-        {
-            fields[1] = new_field;
         }
 
         public Dish_fields get_nmb_field()
@@ -69,19 +50,20 @@ namespace kursovaya
             return fields[2];
         }
 
-        public void set_nmb_field(Nmb_field new_field)
+        public Dish_fields get_ord_id_field()
         {
-            fields[2] = new_field;
+            return fields[3];
         }
 
-        public Dish_fields get_restid_field()
+        public Dish_fields get_rest_id_field()
         {
             return fields[4];
         }
 
-        public void set_rest_field(DishRestId_field new_field)
+        public Dish_fields get_dish_id_field()
         {
-            fields[4] = new_field;
+            return fields[5];
         }
+
     }
 }

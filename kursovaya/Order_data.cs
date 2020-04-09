@@ -23,7 +23,8 @@ namespace kursovaya
             ord_fields.Add(new FinCost_field());
             ord_fields.Add(new RestCol_field());
             ord_fields.Add(new DishCol_field());
-            ord_fields.Add(new RestId_field());
+            ord_fields.Add(new Rest_id_f());
+            ord_fields.Add(new Cust_id_p());
         }
 
         public void RecountFPrice()
@@ -48,7 +49,7 @@ namespace kursovaya
         public void CountDishCol()
         {
             ord_fields[7].set_value("0");
-            int col=0;
+            int col = 0;
 
             foreach (Restaurant rest in rests)
             {
@@ -80,12 +81,12 @@ namespace kursovaya
         {
             return rests[i];
         }
-        
+
         public Order_fields get_ord_name()
         {
             return ord_fields[0];
         }
-        
+
         public Order_fields get_event_date()
         {
             return ord_fields[1];
@@ -100,12 +101,12 @@ namespace kursovaya
         {
             return ord_fields[3];
         }
-        
+
         public Order_fields get_cust_tel()
         {
             return ord_fields[4];
         }
-        
+
         public Order_fields get_fin_cost()
         {
             return ord_fields[5];
@@ -121,14 +122,19 @@ namespace kursovaya
             return ord_fields[7];
         }
 
-        public Order_fields get_restid_field()
+        public Order_fields get_rest_id_f()
         {
             return ord_fields[8];
+        }
+
+        public Order_fields get_cust_id_p()
+        {
+            return ord_fields[9];
         }
 
         public List<Order_fields> get_fields_list()
         {
             return ord_fields;
         }
-    }
+    }        
 }

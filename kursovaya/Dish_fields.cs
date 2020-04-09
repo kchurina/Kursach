@@ -32,13 +32,20 @@ namespace kursovaya
         public Nmb_field() { name_field = "Количество единиц блюда"; field_type = "int"; }
     }
 
-    public class DishOrdId_field : Dish_fields
+    public class Order_id_p : Dish_fields
     {
-        public DishOrdId_field() { name_field = "ID блюда"; field_type = "int"; }
+        public Order_id_p() { name_field = "DishOrdId"; field_type = "int"; }
     }
 
-    public class DishRestId_field : Dish_fields
+    public class Rest_Id_f : Dish_fields
     {
-        public DishRestId_field() { name_field = "ID ресторана"; field_type = "int"; }
+        public Rest_Id_f() { name_field = "DishRestId"; field_type = "int"; }
     }
+
+    public class Dish_id_p : Dish_fields
+    {
+        public Dish_id_p () { name_field = "dish_id_p"; field_type = "int"; }
+
+    }
+
 }

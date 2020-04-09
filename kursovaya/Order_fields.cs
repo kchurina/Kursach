@@ -17,10 +17,15 @@ namespace kursovaya
         virtual public string get_type() { return field_type; }
     }
 
-    public class RestId_field : Order_fields
+    public class Rest_id_f : Order_fields
     {
-        public RestId_field () { name_field = "ID ресторана: "; field_type = "int"; }
+        public Rest_id_f () { name_field = "rest_id_f: "; field_type = "int"; }
 
+    }
+
+    public class Cust_id_p: Order_fields
+    {
+        public Cust_id_p () { name_field = "cust_id_p: "; field_type = "int"; }
     }
 
     public class OrdName_field : Order_fields

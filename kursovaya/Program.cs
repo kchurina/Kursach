@@ -5,13 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data.Common;
+using System.Windows.Forms;
 
 namespace kursovaya
 {
     class Program
     {
-        static void Main(string[] args)
+        [STAThread]
+        static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+
             OrdersManager ord_mngr = new OrdersManager();
             SaverLoaderContr sl_cntr = new SaverLoaderContr();
             ord_mngr.set_orders_list(sl_cntr.Load_orders_from_file());

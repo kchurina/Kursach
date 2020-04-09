@@ -80,11 +80,11 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="Dish_fields.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="OrdersInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="OrdersInfoForm.Designer.cs">
+      <DependentUpon>OrdersInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="OrderMngrContr.cs" />
     <Compile Include="OrdersManager.cs" />

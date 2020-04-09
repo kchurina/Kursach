@@ -53,7 +53,7 @@ namespace kursovaya
             }
         }
 
-       /* private void listView1_ItemActivate(object sender, EventArgs e)
+        private void listView1_ItemActivate(object sender, EventArgs e)
         {
             string text = listView1.FocusedItem.Text;
             OrdersInfoContr ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(text));
@@ -61,7 +61,7 @@ namespace kursovaya
             rest_form.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /*private void button1_Click(object sender, EventArgs e)
         {
             AddOrderInfoForm add_form = new AddOrderInfoForm(mngr_contr);
             add_form.Show();

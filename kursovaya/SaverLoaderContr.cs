@@ -102,10 +102,7 @@ namespace kursovaya
             }
             else
                 Console.WriteLine("!Order_data_reader.HasRows");
-
             Order_data_reader.Close();
-
-
 
             NpgsqlDataReader Rest_data_reader = Rest_command.ExecuteReader();
             if (Order_data_reader.HasRows)
@@ -157,6 +154,13 @@ namespace kursovaya
             }
 
             Dish_data_reader.Close();
+
+            foreach (Order_data ord in ord_mngr.get_orders_list())
+            {
+                ord.CountDishCol();
+                ord.CountRestCol();
+                ord.RecountFPrice();
+            }
 
             return ord_mngr.get_orders_list();
         }

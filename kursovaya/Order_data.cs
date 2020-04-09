@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+
 
 namespace kursovaya
 {
@@ -26,6 +31,7 @@ namespace kursovaya
             ord_fields.Add(new Rest_id_f());
             ord_fields.Add(new Cust_id_p());
         }
+
 
         public void RecountFPrice()
         {

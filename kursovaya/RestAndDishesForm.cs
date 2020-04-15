@@ -12,33 +12,28 @@ namespace kursovaya
 {
     public partial class RestAndDishesForm : Form
     {
-        private List<Restaurant> rests;
+        private Restaurant rest;
         OrdersInfoContr ord_contr;
         private Order_data order;
 
         public RestAndDishesForm(OrdersInfoContr new_contr)
         {
             ord_contr = new_contr;
-            rests = ord_contr.Get_order().get_rests_list();
+            rest = ord_contr.Get_order().get_rest();
             order = ord_contr.Get_order();
             InitializeComponent();
         }
 
         public void Display()
         {
-            List<Label> rest_labels = new List<Label>();
-            List<ListView> list_view = new List<ListView>();
+            Label rest_label = new Label();
+            ListView list_view = new ListView();
 
             Button AddRestB = new Button();
             Button button2 = new Button();
             Button button3 = new Button();
             Button button4 = new Button();
             Button button1 = new Button();
-
-            if (order.get_rest_col().get_value() == "0")
-            {
-                button2.Visible = false;
-            }
 
             if (order.get_dish_col().get_value() == "0") button4.Visible = false;
 
@@ -97,13 +92,7 @@ namespace kursovaya
             this.Controls.Add(button3);
             this.Controls.Add(button4);
             this.Controls.Add(button1);
-
-
-            for (int i = 0; i < rests.Count; i++)
-            {
-                rest_labels.Add(new Label());
-                list_view.Add(new System.Windows.Forms.ListView());
-
+                            
                 ColumnHeader columnHeader1 = new System.Windows.Forms.ColumnHeader();
                 columnHeader1.Text = "Название блюда";
                 ColumnHeader columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -113,25 +102,25 @@ namespace kursovaya
                 columnHeader1.Width = 200;
                 columnHeader2.Width = 200;
                 columnHeader3.Width = 200;
-                list_view[i].Size = new Size(600, 150);
-                list_view[i].Location = new System.Drawing.Point(250, 120 + 180 * i);
-                list_view[i].View = System.Windows.Forms.View.Details;
-                list_view[i].Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
-                list_view[i].FullRowSelect = true;
-                list_view[i].GridLines = true;
+                list_view.Size = new Size(600, 150);
+                list_view.Location = new System.Drawing.Point(250, 120);
+                list_view.View = System.Windows.Forms.View.Details;
+                list_view.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+                list_view.FullRowSelect = true;
+                list_view.GridLines = true;
 
-                rest_labels[i].Location = new Point(10, 120 + 180 * i);
-                rest_labels[i].Size = new Size(500, 100);
-                rest_labels[i].Text = "Название заказа: \n" + order.get_ord_name().get_value() + "\nНазвание ресторана: \n" + rests[i].get_rest_name();
+            rest_label.Location = new Point(10, 120);
+            rest_label.Size = new Size(500, 100);
+            rest_label.Text = "Название заказа: \n" + order.get_ord_name().get_value() + "\nНазвание ресторана: \n" + rest.get_rest_name();
 
-                this.Controls.Add(list_view[i]);//ЭТО ВАЖНО КАК ВОЗДУХ И ПИЩА!!!!!!!!!
-                this.Controls.Add(rest_labels[i]);
+                this.Controls.Add(list_view);//ЭТО ВАЖНО КАК ВОЗДУХ И ПИЩА!!!!!!!!!
+                this.Controls.Add(rest_label);
 
-                List<Dish> dishes = rests[i].get_dishes_list();
+                List<Dish> dishes = rest.get_dishes_list();
                 foreach (Dish dish in dishes)
                 {
                     ListViewItem item = new ListViewItem(new string[] { dish.get_name_field().get_value(), dish.get_cost_field().get_value(), dish.get_nmb_field().get_value() });
-                    list_view[i].Items.Add(item);
+                    list_view.Items.Add(item);
                 }
 
                 Label price_l = new Label();
@@ -141,7 +130,7 @@ namespace kursovaya
                 price_l.BackColor = System.Drawing.SystemColors.ButtonHighlight;
                 price_l.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 this.Controls.Add(price_l);
-            }
+            
         }
 
         private void RestAndDishesForm_Load(object sender, EventArgs e)
@@ -178,7 +167,6 @@ namespace kursovaya
             Controls.Clear();
             order.RecountFPrice();
             order.CountDishCol();
-            order.CountRestCol();
             Display();
         }
     }

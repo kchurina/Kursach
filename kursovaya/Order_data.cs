@@ -13,23 +13,21 @@ namespace kursovaya
     public class Order_data
     {
         private List<Order_fields> ord_fields;
-        private List<Restaurant> rests;
+        private Restaurant rest;
+        private Customer cust;
 
         public Order_data()
         {
-            rests = new List<Restaurant>();
+            rest = new Restaurant();
+            cust = new Customer();
 
             ord_fields = new List<Order_fields>();
             ord_fields.Add(new OrdName_field());
             ord_fields.Add(new Date_field());
             ord_fields.Add(new Status_field());
-            ord_fields.Add(new CustName_field());
-            ord_fields.Add(new CustTel_field());
             ord_fields.Add(new FinCost_field());
-            ord_fields.Add(new RestCol_field());
             ord_fields.Add(new DishCol_field());
             ord_fields.Add(new Rest_id_f());
-            ord_fields.Add(new Cust_id_p());
         }
 
 
@@ -37,55 +35,46 @@ namespace kursovaya
         {
             int price = 0;
 
-            foreach (Restaurant rest in rests)
+            foreach (Dish dish in rest.get_dishes_list())
             {
-                foreach (Dish dish in rest.get_dishes_list())
-                {
-                    price += Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
-                }
+                price += Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
             }
-            ord_fields[5].set_value(price.ToString());
-        }
-
-        public void CountRestCol()
-        {
-            ord_fields[6].set_value(rests.Count.ToString());
+            
+            ord_fields[3].set_value(price.ToString());
         }
 
         public void CountDishCol()
         {
-            ord_fields[7].set_value("0");
+            ord_fields[4].set_value("0");
             int col = 0;
 
-            foreach (Restaurant rest in rests)
+            
+            foreach (Dish dish in rest.get_dishes_list())
             {
-                foreach (Dish dish in rest.get_dishes_list())
-                {
-                    col += Convert.ToInt32(dish.get_nmb_field().get_value());
-                }
-            }
+                col += Convert.ToInt32(dish.get_nmb_field().get_value());
+            }            
 
-            ord_fields[7].set_value(col.ToString());
+            ord_fields[4].set_value(col.ToString());
         }
 
-        public void set_rests_list(List<Restaurant> new_rest_list)
+        public Customer get_customer()
         {
-            rests = new_rest_list;
+            return cust;
         }
 
-        public List<Restaurant> get_rests_list()
+        public void set_customer(Customer new_cust)
         {
-            return rests;
+            cust = new_cust;
         }
 
-        public void add_rest(Restaurant new_rest)
+        public void set_rest(Restaurant new_rest)
         {
-            rests.Add(new_rest);
+            rest = new_rest;
         }
 
-        public Restaurant get_rest(int i)
+        public Restaurant get_rest()
         {
-            return rests[i];
+            return rest;
         }
 
         public Order_fields get_ord_name()
@@ -102,40 +91,20 @@ namespace kursovaya
         {
             return ord_fields[2];
         }
-
-        public Order_fields get_cust_name()
+       
+        public Order_fields get_fin_cost()
         {
             return ord_fields[3];
         }
 
-        public Order_fields get_cust_tel()
+        public Order_fields get_dish_col()
         {
             return ord_fields[4];
         }
 
-        public Order_fields get_fin_cost()
-        {
-            return ord_fields[5];
-        }
-
-        public Order_fields get_rest_col()
-        {
-            return ord_fields[6];
-        }
-
-        public Order_fields get_dish_col()
-        {
-            return ord_fields[7];
-        }
-
         public Order_fields get_rest_id_f()
         {
-            return ord_fields[8];
-        }
-
-        public Order_fields get_cust_id_p()
-        {
-            return ord_fields[9];
+            return ord_fields[5];
         }
 
         public List<Order_fields> get_fields_list()

@@ -57,12 +57,7 @@ namespace kursovaya
     {
         public FinCost_field() { name_field = "Итоговая стоимость заказа: "; field_type = "int"; }
     }
-
-    public class RestCol_field : Order_fields
-    {
-        public RestCol_field() { name_field = "Количество ресторанов: "; field_type = "int"; }
-    }
-
+    
     public class DishCol_field : Order_fields
     {
         public DishCol_field() { name_field = "Количество блюд: "; field_type = "int"; }

@@ -77,7 +77,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddOrderInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddOrderInfoForm.Designer.cs">
+      <DependentUpon>AddOrderInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlterMngr.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="Dish_fields.cs" />
     <Compile Include="OrdersInfoContr.cs" />
@@ -100,7 +108,13 @@
       <DependentUpon>RestAndDishesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Restaurant.cs" />
-    <Compile Include="SaverLoaderContr.cs" />
+    <Compile Include="DBContr.cs" />
+    <EmbeddedResource Include="AddOrderInfoForm.resx">
+      <DependentUpon>AddOrderInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersInfoForm.resx">
+      <DependentUpon>OrdersInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -110,6 +124,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RestAndDishesForm.resx">
+      <DependentUpon>RestAndDishesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

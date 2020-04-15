@@ -14,16 +14,29 @@ namespace kursovaya
     {
         private OrdersManager ord_mngr = new OrdersManager();
         private List<Order_data> orders;
-        OrderMngrContr mngr_contr;
-        SaverLoaderContr slcontr;
+        private OrderMngrContr mngr_contr;
+        private DBContr slcontr;
 
         public MainForm()
         {
-            slcontr = new SaverLoaderContr();
-            orders = slcontr.Load_orders_from_file();
+            slcontr = new DBContr();
+            orders = slcontr.Load_from_db();
+            foreach (Order_data ord in orders)
+            {
+                Console.WriteLine("@");
+                Console.WriteLine(ord.get_customer().get_cust_name().get_value());
+
+                Console.WriteLine("     " + ord.get_rest().get_rest_name());
+                foreach (Dish dish in ord.get_rest().get_dishes_list())
+                {
+                    Console.WriteLine("         " + dish.get_name_field().get_value());
+                }
+
+            }
 
             ord_mngr.set_orders_list(orders);
             mngr_contr = new OrderMngrContr(ord_mngr);
+            
             InitializeComponent();
         }
 
@@ -35,6 +48,7 @@ namespace kursovaya
         public void Display()
         {
             int count_itms = orders.Count();
+            Console.WriteLine(count_itms);
             listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
 
@@ -42,15 +56,27 @@ namespace kursovaya
             {
                 ListViewItem item = new ListViewItem(new string[] { orders[i].get_ord_name().get_value(),
                    orders[i].get_event_date().get_value(),
-                   orders[i].get_cust_name().get_value(),
-                   orders[i].get_cust_tel().get_value(),
+                   orders[i].get_customer().get_cust_name().get_value(),
+                   orders[i].get_customer().get_cust_tel().get_value(),
                    orders[i].get_fin_cost().get_value(),
                    orders[i].get_status().get_value(),
-                   orders[i].get_rest_col().get_value(),
                    orders[i].get_dish_col().get_value()
                });
                 listView1.Items.Add(item);
             }
+            foreach (Order_data ord in orders)
+            {
+                Console.WriteLine("@");
+                Console.WriteLine(ord.get_customer().get_cust_name().get_value());
+
+                Console.WriteLine("     " + ord.get_rest().get_rest_name());
+                foreach (Dish dish in ord.get_rest().get_dishes_list())
+                {
+                    Console.WriteLine("         " + dish.get_name_field().get_value());
+                }
+
+            }
+
         }
 
         private void listView1_ItemActivate(object sender, EventArgs e)
@@ -61,17 +87,17 @@ namespace kursovaya
             rest_form.Show();
         }
 
-        /*private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             AddOrderInfoForm add_form = new AddOrderInfoForm(mngr_contr);
             add_form.Show();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        /*private void button4_Click(object sender, EventArgs e)
         {
             DeleteOrderForm del_form = new DeleteOrderForm(mngr_contr);
             del_form.Show();
-        }
+        }*/
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -80,20 +106,20 @@ namespace kursovaya
             {
                 listView1.Items.Clear();
             }
+            ord_mngr.set_orders_list(slcontr.Load_from_db());
             foreach (Order_data ord in ord_mngr.get_orders_list())
             {
-                ord.RecountFPrice();
-                ord.CountRestCol();
+                if(String.Equals(ord.get_status().get_value(), "В процессе уточнения"))
+                    ord.RecountFPrice();
                 ord.CountDishCol();
             }
             Display();
         }
-
+        
         private void button5_Click(object sender, EventArgs e)
         {
-            slcontr.SaveMngrToFile(ord_mngr);
         }
-
+/*
         private void button3_Click(object sender, EventArgs e)
         {
             slcontr.SaveMngrToFile(ord_mngr);

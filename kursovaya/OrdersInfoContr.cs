@@ -29,30 +29,30 @@ namespace kursovaya
             Restaurant new_rest = new Restaurant();
 
             new_rest.set_rest_name(rest_name);
-            order.add_rest(new_rest);
+            order.set_rest(new_rest);
         }
 
         public bool CheckExist(string name)
         {
-            foreach (Restaurant rest in order.get_rests_list())
-            {
+            Restaurant rest = order.get_rest();
+            
                 if (String.Equals(name, rest.get_rest_name()))
                 {
                     return true;
                 }
-            }
+            
             return false;
         }
 
         public Restaurant FindRest(string name)
         {
-            foreach (Restaurant rest in order.get_rests_list())
-            {
+            Restaurant rest = order.get_rest();
+            
                 if (String.Equals(name, rest.get_rest_name()))
                 {
                     return rest;
                 }
-            }
+            
             return null;
         }
 
@@ -60,16 +60,16 @@ namespace kursovaya
         {
             order.get_ord_name().set_value(name);
             order.get_event_date().set_value(date);
-            order.get_cust_name().set_value(c_name);
-            order.get_cust_tel().set_value(tel);
+            order.get_customer().get_cust_name().set_value(c_name);
+            order.get_customer().get_cust_tel().set_value(tel);
             order.get_fin_cost().set_value(cost);
             order.get_status().set_value(status);
 
         }
 
-        public void DelRest(string rest_name)
+        /*public void DelRest(string rest_name)
         {
-            List<Restaurant> rest_list = order.get_rests_list();
+            List<Restaurant> rest_list = order.get_rest();
             for (int i = 0; i < rest_list.Count; i++)
             {
                 if (String.Equals(rest_list[i].get_rest_name(), rest_name))
@@ -78,7 +78,7 @@ namespace kursovaya
                     break;
                 }
             }
-        }
+        }*/
 
     }
 }

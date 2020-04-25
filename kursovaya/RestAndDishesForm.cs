@@ -116,7 +116,7 @@ namespace kursovaya
                 this.Controls.Add(list_view);//ЭТО ВАЖНО КАК ВОЗДУХ И ПИЩА!!!!!!!!!
                 this.Controls.Add(rest_label);
 
-                List<Dish> dishes = rest.get_dishes_list();
+                List<Dish> dishes = order.get_dishes_list();
                 foreach (Dish dish in dishes)
                 {
                     ListViewItem item = new ListViewItem(new string[] { dish.get_name_field().get_value(), dish.get_cost_field().get_value(), dish.get_nmb_field().get_value() });

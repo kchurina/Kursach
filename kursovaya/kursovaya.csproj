@@ -77,17 +77,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddOrderInfoForm.cs">
+    <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddOrderInfoForm.Designer.cs">
-      <DependentUpon>AddOrderInfoForm.cs</DependentUpon>
+    <Compile Include="OrderForm.Designer.cs">
+      <DependentUpon>OrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AlterMngr.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="Dish_fields.cs" />
+    <Compile Include="ShowDBListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowDBListForm.Designer.cs">
+      <DependentUpon>ShowDBListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrdersInfoContr.cs" />
     <Compile Include="OrdersInfoForm.cs">
       <SubType>Form</SubType>
@@ -109,8 +113,11 @@
     </Compile>
     <Compile Include="Restaurant.cs" />
     <Compile Include="DBContr.cs" />
-    <EmbeddedResource Include="AddOrderInfoForm.resx">
-      <DependentUpon>AddOrderInfoForm.cs</DependentUpon>
+    <EmbeddedResource Include="OrderForm.resx">
+      <DependentUpon>OrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowDBListForm.resx">
+      <DependentUpon>ShowDBListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdersInfoForm.resx">
       <DependentUpon>OrdersInfoForm.cs</DependentUpon>

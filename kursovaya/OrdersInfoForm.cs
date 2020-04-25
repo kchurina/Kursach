@@ -15,24 +15,13 @@ namespace kursovaya
         private OrdersManager ord_mngr = new OrdersManager();
         private List<Order_data> orders;
         private OrderMngrContr mngr_contr;
-        private DBContr slcontr;
+        private DBContr db_contr;
 
         public MainForm()
         {
-            slcontr = new DBContr();
-            orders = slcontr.Load_from_db();
-            foreach (Order_data ord in orders)
-            {
-                Console.WriteLine("@");
-                Console.WriteLine(ord.get_customer().get_cust_name().get_value());
-
-                Console.WriteLine("     " + ord.get_rest().get_rest_name());
-                foreach (Dish dish in ord.get_rest().get_dishes_list())
-                {
-                    Console.WriteLine("         " + dish.get_name_field().get_value());
-                }
-
-            }
+            db_contr = new DBContr();
+            orders = db_contr.Load_from_db();
+            
 
             ord_mngr.set_orders_list(orders);
             mngr_contr = new OrderMngrContr(ord_mngr);
@@ -43,6 +32,19 @@ namespace kursovaya
         private void MainForm_Load(object sender, EventArgs e)
         {
             Display();
+
+            foreach (Order_data ord in orders)
+            {
+                Console.WriteLine("@");
+                Console.WriteLine(ord.get_ord_name().get_value() +" "+ord.get_customer().get_cust_name().get_value());
+
+                Console.WriteLine("     !" + ord.get_rest().get_rest_name());
+                foreach (Dish dish in ord.get_dishes_list())
+                {
+                    Console.WriteLine("         " + dish.get_ord_id_field().get_value() +" "+dish.get_name_field().get_value());
+                }
+
+            }
         }
 
         public void Display()
@@ -64,18 +66,6 @@ namespace kursovaya
                });
                 listView1.Items.Add(item);
             }
-            foreach (Order_data ord in orders)
-            {
-                Console.WriteLine("@");
-                Console.WriteLine(ord.get_customer().get_cust_name().get_value());
-
-                Console.WriteLine("     " + ord.get_rest().get_rest_name());
-                foreach (Dish dish in ord.get_rest().get_dishes_list())
-                {
-                    Console.WriteLine("         " + dish.get_name_field().get_value());
-                }
-
-            }
 
         }
 
@@ -86,27 +76,46 @@ namespace kursovaya
             RestAndDishesForm rest_form = new RestAndDishesForm(ord_contr);
             rest_form.Show();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            AddOrderInfoForm add_form = new AddOrderInfoForm(mngr_contr);
-            add_form.Show();
-        }
-
+        
         /*private void button4_Click(object sender, EventArgs e)
         {
             DeleteOrderForm del_form = new DeleteOrderForm(mngr_contr);
             del_form.Show();
         }*/
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void RestListTSMItem_Click(object sender, EventArgs e)
+        {
+            ShowDBListForm show_form = new ShowDBListForm(new List<Restaurant>());
+            show_form.Show();
+        }
+
+        private void DishListTSMItem_Click(object sender, EventArgs e)
+        {
+            ShowDBListForm show_form = new ShowDBListForm(new List<Dish>());
+            show_form.Show();
+        }
+
+        private void CustListTSMItem_Click(object sender, EventArgs e)
+        {
+            ShowDBListForm show_form = new ShowDBListForm(new List<Customer>());
+            show_form.Show();
+        }
+
+        private void UpdateTSMenuItem_Click(object sender, EventArgs e)
         {
             int n = listView1.Items.Count;
             for (int i = n - 1; i >= 0; --i)
             {
                 listView1.Items.Clear();
             }
-            ord_mngr.set_orders_list(slcontr.Load_from_db());
+
+            ord_mngr = new OrdersManager();
+            ord_mngr.set_orders_list(db_contr.Load_from_db());
+
             foreach (Order_data ord in ord_mngr.get_orders_list())
             {
                 if(String.Equals(ord.get_status().get_value(), "В процессе уточнения"))
@@ -115,23 +124,29 @@ namespace kursovaya
             }
             Display();
         }
-        
-        private void button5_Click(object sender, EventArgs e)
+
+        private void AddOrderTSMItem_Click(object sender, EventArgs e)
         {
+            OrderForm order_form = new OrderForm(mngr_contr);
+            order_form.Show();
         }
-/*
+
+        private void test_but_Click(object sender, EventArgs e)
+        {
+            //db_contr.AddDish();
+        }
+        /*
         private void button3_Click(object sender, EventArgs e)
         {
-            slcontr.SaveMngrToFile(ord_mngr);
             FiltersContr filter_controler = new FiltersContr();
             FilterForm frm_filter = new FilterForm(filter_controler);
             frm_filter.Show();
         }
 
         private void button6_Click(object sender, EventArgs e)
-        {
-            GetOrdNameForm get_form = new GetOrdNameForm(mngr_contr);
-            get_form.Show();
-        }*/
+{
+GetOrdNameForm get_form = new GetOrdNameForm(mngr_contr);
+get_form.Show();
+}*/
     }
 }

@@ -12,7 +12,67 @@ namespace kursovaya
 {
     public class DBContr
     {                
-        private String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=rbcrf325;Database=usrdb;";        
+        private String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=rbcrf325;Database=usrdb;";
+
+        public int AddOrder(Order_data order)
+        {
+            int ord_id;
+
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand ord_commadn = new NpgsqlCommand("INSERT INTO oorder(rest_id_f, cust_id_f, order_date) VALUES ("+ Convert.ToInt32(order.get_rest().get_rest_id())+", "+ Convert.ToInt32(order.get_customer().get_cust_id_p().get_value())+",'"+order.get_event_date().get_value()+"') RETURNING order_id_p", npgSqlConnection);
+            ord_id = Convert.ToInt32(ord_commadn.ExecuteScalar().ToString());
+            Console.WriteLine(ord_id);
+
+            foreach(Dish dish in order.get_dishes_list())
+            {
+                int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
+                NpgsqlCommand ordr_commadn = new NpgsqlCommand("INSERT INTO ordered(order_id_p, dish_id_p, oredered_dish_price, num)" +"VALUES ("+ord_id+", "+Convert.ToInt32(dish.get_dish_id_field().get_value())+", "+price+"::money, "+ Convert.ToInt32(dish.get_nmb_field().get_value()) + ")", npgSqlConnection);
+                ordr_commadn.ExecuteScalar();
+            }
+
+            npgSqlConnection.Close();
+            return ord_id;
+        }
+
+        public string AddRest(Restaurant rest)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO restaurant(rest_name) VALUES ('" + rest.get_rest_name() + "') RETURNING rest_id_p", npgSqlConnection);
+            string id = add_commadn.ExecuteScalar().ToString();
+
+            add_commadn.ExecuteScalar().ToString();
+
+            npgSqlConnection.Close();
+            return id;
+        }
+
+        public string AddCustomer(Customer cust)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO customer(fname, tel) VALUES ('" +cust.get_cust_name().get_value() +"', '"+cust.get_cust_tel().get_value()+"') RETURNING cus_id_p", npgSqlConnection);
+            string id = add_commadn.ExecuteScalar().ToString();
+
+            npgSqlConnection.Close();
+            return id;
+        }
+
+        public string AddDish(Dish dish)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO dish(dish_name, price) VALUES ('"+dish.get_name_field().get_value()+"', "+Convert.ToInt32(dish.get_cost_field().get_value())+") RETURNING dish_id_p", npgSqlConnection);
+            string id = add_commadn.ExecuteScalar().ToString();
+            
+            npgSqlConnection.Close();
+            return id;
+        }
 
         public List<Order_data> Load_from_db()
         {
@@ -25,10 +85,10 @@ namespace kursovaya
             OrdersManager ord_mngr = new OrdersManager();
             NpgsqlDataReader Order_data_reader = Order_data_Command.ExecuteReader();
             
-                foreach (DbDataRecord Odr in Order_data_reader)
-                {
+            foreach (DbDataRecord Odr in Order_data_reader)
+            { 
                     Order_data order_data = new Order_data();
-                Customer cust = new Customer();
+                    Customer cust = new Customer();
 
                     order_data.get_ord_name().set_value(Odr["order_id_p"].ToString());
                     cust.get_cust_id_p().set_value(Odr["cust_id_p"].ToString());
@@ -37,10 +97,10 @@ namespace kursovaya
                     cust.get_cust_name().set_value(Odr["fname"].ToString());
                     cust.get_cust_tel().set_value(Odr["tel"].ToString());
 
-                order_data.set_customer(cust);
+                    order_data.set_customer(cust);
 
                     ord_mngr.add_order(order_data);
-                }
+            }
             Order_data_reader.Close();
 
             NpgsqlDataReader Rest_data_reader = Rest_command.ExecuteReader();
@@ -70,26 +130,26 @@ namespace kursovaya
             NpgsqlDataReader Dish_data_reader = Dish_command.ExecuteReader();
             foreach (DbDataRecord Dr in Dish_data_reader)
             {
-                Dish dish = new Dish();
+                Dish d = new Dish();
 
-                dish.get_name_field().set_value(Dr["dish_name"].ToString());
-                dish.get_nmb_field().set_value(Dr["num"].ToString());
-                dish.get_cost_field().set_value(Dr["price"].ToString());
-                dish.get_ord_id_field().set_value(Dr["order_id_p"].ToString());
-                dish.get_rest_id_field().set_value(Dr["rest_id_f"].ToString());
-                dish.get_dish_id_field().set_value(Dr["dish_id_p"].ToString());
+                d.get_name_field().set_value(Dr["dish_name"].ToString());
+                d.get_nmb_field().set_value(Dr["num"].ToString());
+                d.get_cost_field().set_value(Dr["price"].ToString());
+                d.get_ord_id_field().set_value(Dr["order_id_p"].ToString());
+                d.get_rest_id_field().set_value(Dr["rest_id_f"].ToString());
+                d.get_dish_id_field().set_value(Dr["dish_id_p"].ToString());
 
                 foreach (Order_data ord in ord_mngr.get_orders_list())
-                {
-                    Restaurant rest = ord.get_rest();
+                {                   
                     
-                        if (String.Equals(ord.get_ord_name().get_value(), dish.get_ord_id_field().get_value()) &
-                            String.Equals(rest.get_rest_id(), dish.get_rest_id_field().get_value()))
+                        if (ord.get_ord_name().get_value()==d.get_ord_id_field().get_value())
                         {
-                            rest.add_dish_to_rest(dish);
+                            Console.WriteLine(ord.get_ord_name().get_value() +"=="+ d.get_ord_id_field().get_value());
+                            ord.add_dish_to_order(d);
                         }
                     
                 }
+                
             }
 
             Dish_data_reader.Close();
@@ -142,6 +202,7 @@ namespace kursovaya
                 dish.get_dish_id_field().set_value(D["dish_id_p"].ToString());
                 dish.get_name_field().set_value(D["dish_name"].ToString());
                 dish.get_cost_field().set_value(D["price"].ToString());
+                dish.get_nmb_field().set_value("0");
 
                 dishes_list.Add(dish);
             }
@@ -155,7 +216,7 @@ namespace kursovaya
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
-            NpgsqlCommand Orders_data_Command = new NpgsqlCommand("SELECT * FROM customers", npgSqlConnection);
+            NpgsqlCommand Orders_data_Command = new NpgsqlCommand("SELECT * FROM customer", npgSqlConnection);
 
             List<Customer> custs_list = new List<Customer>();
             NpgsqlDataReader Custs_data_reader = Orders_data_Command.ExecuteReader();

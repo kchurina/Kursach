@@ -19,7 +19,7 @@ namespace kursovaya
             fields.Add(new Rest_Id_f());
             fields.Add(new Dish_id_p());
         }
-
+        
         public List<Dish_fields> get_all_dish_fields()
         {
             return fields;

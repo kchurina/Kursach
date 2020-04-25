@@ -34,7 +34,7 @@ namespace kursovaya
 
     public class Order_id_p : Dish_fields
     {
-        public Order_id_p() { name_field = "DishOrdId"; field_type = "int"; }
+        public Order_id_p() { name_field = "DishOrdId"; field_type = "string"; }
     }
 
     public class Rest_Id_f : Dish_fields

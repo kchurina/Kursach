@@ -13,6 +13,7 @@ namespace kursovaya
     public class Order_data
     {
         private List<Order_fields> ord_fields;
+        private List<Dish> dishes;
         private Restaurant rest;
         private Customer cust;
 
@@ -20,6 +21,7 @@ namespace kursovaya
         {
             rest = new Restaurant();
             cust = new Customer();
+            dishes = new List<Dish>();
 
             ord_fields = new List<Order_fields>();
             ord_fields.Add(new OrdName_field());
@@ -35,11 +37,11 @@ namespace kursovaya
         {
             int price = 0;
 
-            foreach (Dish dish in rest.get_dishes_list())
+            foreach (Dish dish in dishes)
             {
                 price += Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
             }
-            
+
             ord_fields[3].set_value(price.ToString());
         }
 
@@ -48,11 +50,11 @@ namespace kursovaya
             ord_fields[4].set_value("0");
             int col = 0;
 
-            
-            foreach (Dish dish in rest.get_dishes_list())
+
+            foreach (Dish dish in dishes)
             {
                 col += Convert.ToInt32(dish.get_nmb_field().get_value());
-            }            
+            }
 
             ord_fields[4].set_value(col.ToString());
         }
@@ -91,7 +93,7 @@ namespace kursovaya
         {
             return ord_fields[2];
         }
-       
+
         public Order_fields get_fin_cost()
         {
             return ord_fields[3];
@@ -111,5 +113,25 @@ namespace kursovaya
         {
             return ord_fields;
         }
-    }        
+
+        public void set_dishes_list(List<Dish> new_list)
+        {
+            dishes = new_list;
+        }
+
+        public List<Dish> get_dishes_list()
+        {
+            return dishes;
+        }
+
+        public void add_dish_to_order(Dish new_dish)
+        {
+            dishes.Add(new_dish);
+        }
+
+        public Dish get_dish_of_order(int i)
+        {
+            return dishes[i];
+        }
+    }
 }

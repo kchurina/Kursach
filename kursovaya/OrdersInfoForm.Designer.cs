@@ -35,22 +35,21 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.ShowTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокРесторановToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокБлюдToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокЗаказчиковToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestListTSMItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DishListTSMItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CustListTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.блюдоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddOrderTSMItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddDishTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ресторанToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказчикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddCustTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.блюдоToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,8 +61,9 @@
             this.ресторанToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.заказчикToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.добавитьФильтрациюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.menuStrip1.SuspendLayout();
+            this.UpdateTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test_but = new System.Windows.Forms.Button();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -114,6 +114,11 @@
             this.columnHeader6.Text = "Статус заказа";
             this.columnHeader6.Width = 150;
             // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Кол-во блюд";
+            this.columnHeader7.Width = 147;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -125,16 +130,6 @@
             this.label1.Text = "Для просмотра подробностей заказа \r\nщелкните дважды левой кнопкой мыши по строке " +
     "нужного заказа :)\r\n";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(274, 353);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(166, 36);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Добавить заказ";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button3
             // 
@@ -154,16 +149,6 @@
             this.button4.Text = "Удалить заказ";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(655, 353);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(166, 36);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Обновить форму";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(83, 353);
@@ -173,71 +158,76 @@
             this.button6.Text = "Изменить заказ";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ShowTSMenuItem,
             this.AddTSMenuItem,
             this.EditTSMenuItem,
             this.DeleteTSMenuItem,
-            this.добавитьФильтрациюToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1109, 28);
-            this.menuStrip1.TabIndex = 9;
-            this.menuStrip1.Text = "menuStrip1";
+            this.добавитьФильтрациюToolStripMenuItem,
+            this.UpdateTSMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1109, 28);
+            this.menuStrip.TabIndex = 9;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // ShowTSMenuItem
             // 
             this.ShowTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.списокРесторановToolStripMenuItem,
-            this.списокБлюдToolStripMenuItem,
-            this.списокЗаказчиковToolStripMenuItem});
+            this.RestListTSMItem,
+            this.DishListTSMItem,
+            this.CustListTSMItem});
             this.ShowTSMenuItem.Name = "ShowTSMenuItem";
             this.ShowTSMenuItem.Size = new System.Drawing.Size(128, 24);
             this.ShowTSMenuItem.Text = "Показать из БД";
             // 
-            // списокРесторановToolStripMenuItem
+            // RestListTSMItem
             // 
-            this.списокРесторановToolStripMenuItem.Name = "списокРесторановToolStripMenuItem";
-            this.списокРесторановToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.списокРесторановToolStripMenuItem.Text = "Список ресторанов";
+            this.RestListTSMItem.Name = "RestListTSMItem";
+            this.RestListTSMItem.Size = new System.Drawing.Size(220, 26);
+            this.RestListTSMItem.Text = "Список ресторанов";
+            this.RestListTSMItem.Click += new System.EventHandler(this.RestListTSMItem_Click);
             // 
-            // списокБлюдToolStripMenuItem
+            // DishListTSMItem
             // 
-            this.списокБлюдToolStripMenuItem.Name = "списокБлюдToolStripMenuItem";
-            this.списокБлюдToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.списокБлюдToolStripMenuItem.Text = "Список блюд";
+            this.DishListTSMItem.Name = "DishListTSMItem";
+            this.DishListTSMItem.Size = new System.Drawing.Size(220, 26);
+            this.DishListTSMItem.Text = "Список блюд";
+            this.DishListTSMItem.Click += new System.EventHandler(this.DishListTSMItem_Click);
             // 
-            // списокЗаказчиковToolStripMenuItem
+            // CustListTSMItem
             // 
-            this.списокЗаказчиковToolStripMenuItem.Name = "списокЗаказчиковToolStripMenuItem";
-            this.списокЗаказчиковToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.списокЗаказчиковToolStripMenuItem.Text = "Список заказчиков";
+            this.CustListTSMItem.Name = "CustListTSMItem";
+            this.CustListTSMItem.Size = new System.Drawing.Size(220, 26);
+            this.CustListTSMItem.Text = "Список заказчиков";
+            this.CustListTSMItem.Click += new System.EventHandler(this.CustListTSMItem_Click);
             // 
             // AddTSMenuItem
             // 
             this.AddTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.заказToolStripMenuItem,
-            this.блюдоToolStripMenuItem,
+            this.AddOrderTSMItem,
+            this.AddDishTSMItem,
             this.ресторанToolStripMenuItem,
-            this.заказчикаToolStripMenuItem});
+            this.AddCustTSMItem});
             this.AddTSMenuItem.Name = "AddTSMenuItem";
             this.AddTSMenuItem.Size = new System.Drawing.Size(123, 24);
             this.AddTSMenuItem.Text = "Добавить в БД";
             // 
-            // заказToolStripMenuItem
+            // AddOrderTSMItem
             // 
-            this.заказToolStripMenuItem.Name = "заказToolStripMenuItem";
-            this.заказToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.заказToolStripMenuItem.Text = "Заказ";
+            this.AddOrderTSMItem.Name = "AddOrderTSMItem";
+            this.AddOrderTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddOrderTSMItem.Text = "Заказ";
+            this.AddOrderTSMItem.Click += new System.EventHandler(this.AddOrderTSMItem_Click);
             // 
-            // блюдоToolStripMenuItem
+            // AddDishTSMItem
             // 
-            this.блюдоToolStripMenuItem.Name = "блюдоToolStripMenuItem";
-            this.блюдоToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.блюдоToolStripMenuItem.Text = "Блюдо";
+            this.AddDishTSMItem.Name = "AddDishTSMItem";
+            this.AddDishTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddDishTSMItem.Text = "Блюдо";
             // 
             // ресторанToolStripMenuItem
             // 
@@ -245,11 +235,11 @@
             this.ресторанToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.ресторанToolStripMenuItem.Text = "Ресторан";
             // 
-            // заказчикаToolStripMenuItem
+            // AddCustTSMItem
             // 
-            this.заказчикаToolStripMenuItem.Name = "заказчикаToolStripMenuItem";
-            this.заказчикаToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.заказчикаToolStripMenuItem.Text = "Заказчик";
+            this.AddCustTSMItem.Name = "AddCustTSMItem";
+            this.AddCustTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddCustTSMItem.Text = "Заказчик";
             // 
             // EditTSMenuItem
             // 
@@ -327,29 +317,40 @@
             this.добавитьФильтрациюToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
             this.добавитьФильтрациюToolStripMenuItem.Text = "Фильтрация...";
             // 
-            // columnHeader7
+            // UpdateTSMenuItem
             // 
-            this.columnHeader7.Text = "Кол-во блюд";
-            this.columnHeader7.Width = 147;
+            this.UpdateTSMenuItem.Name = "UpdateTSMenuItem";
+            this.UpdateTSMenuItem.Size = new System.Drawing.Size(99, 24);
+            this.UpdateTSMenuItem.Text = "Обновить...";
+            this.UpdateTSMenuItem.Click += new System.EventHandler(this.UpdateTSMenuItem_Click);
+            // 
+            // test_but
+            // 
+            this.test_but.Location = new System.Drawing.Point(13, 308);
+            this.test_but.Name = "test_but";
+            this.test_but.Size = new System.Drawing.Size(75, 23);
+            this.test_but.TabIndex = 10;
+            this.test_but.Text = "test";
+            this.test_but.UseVisualStyleBackColor = true;
+            this.test_but.Click += new System.EventHandler(this.test_but_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 416);
+            this.Controls.Add(this.test_but);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStrip);
             this.Name = "MainForm";
             this.Text = "Order\'s Info";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,23 +366,21 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem AddTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShowTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DeleteTSMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem списокРесторановToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem списокБлюдToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem списокЗаказчиковToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem заказToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RestListTSMItem;
+        private System.Windows.Forms.ToolStripMenuItem DishListTSMItem;
+        private System.Windows.Forms.ToolStripMenuItem CustListTSMItem;
+        private System.Windows.Forms.ToolStripMenuItem AddOrderTSMItem;
+        private System.Windows.Forms.ToolStripMenuItem AddDishTSMItem;
         private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem заказчикаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AddCustTSMItem;
         private System.Windows.Forms.ToolStripMenuItem заказToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem1;
@@ -392,6 +391,8 @@
         private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem добавитьФильтрациюToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ToolStripMenuItem UpdateTSMenuItem;
+        private System.Windows.Forms.Button test_but;
     }
 }
 

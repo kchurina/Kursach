@@ -77,6 +77,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCustForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddCustForm.Designer.cs">
+      <DependentUpon>AddCustForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddDishForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDishForm.Designer.cs">
+      <DependentUpon>AddDishForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddRestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddRestForm.Designer.cs">
+      <DependentUpon>AddRestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustInfoContr.cs" />
+    <Compile Include="DishInfoContr.cs" />
     <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +106,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="Dish_fields.cs" />
+    <Compile Include="RestInfoContr.cs" />
     <Compile Include="ShowDBListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +134,15 @@
     </Compile>
     <Compile Include="Restaurant.cs" />
     <Compile Include="DBContr.cs" />
+    <EmbeddedResource Include="AddCustForm.resx">
+      <DependentUpon>AddCustForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddDishForm.resx">
+      <DependentUpon>AddDishForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddRestForm.resx">
+      <DependentUpon>AddRestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -12,12 +12,15 @@ namespace kursovaya
 {
     public partial class OrderForm : Form
     {
-        private DBContr db_contr = new DBContr();
+        //private DBContr db_contr = new DBContr();
         private List<Customer> custs;
         private List<Restaurant> rests;
         private List<Dish> dishes;
         private Order_data order = new Order_data();
         private OrderMngrContr mngr_contr;
+        private DishInfoContr dish_contr;
+        private RestInfoContr rest_contr;
+        private CustInfoContr cust_contr;
 
         private List<ComboBox> DishCB_list = new List<ComboBox>();
         private List<TextBox> DishTB_list = new List<TextBox>();
@@ -28,9 +31,13 @@ namespace kursovaya
         public OrderForm(OrderMngrContr new_mngr_contr)
         {            
             InitializeComponent();
-            custs = db_contr.Get_custs_from_db();
-            rests = db_contr.Get_rests_from_db();
-            dishes = db_contr.Get_dishes_from_db();
+            dish_contr = new DishInfoContr();
+            rest_contr = new RestInfoContr();
+            cust_contr = new CustInfoContr();
+
+            dishes = dish_contr.GetDisheList();
+            rests = rest_contr.GetRestsList();
+            custs = cust_contr.GetCustsList();
             mngr_contr = new_mngr_contr;
 
             Display(custs, rests);

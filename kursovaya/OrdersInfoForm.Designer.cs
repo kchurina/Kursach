@@ -37,9 +37,6 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.ShowTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestListTSMItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +45,7 @@
             this.AddTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddOrderTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddDishTSMItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ресторанToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddRestTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddCustTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,40 +120,13 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(240, 308);
+            this.label1.Location = new System.Drawing.Point(304, 302);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(458, 34);
             this.label1.TabIndex = 1;
             this.label1.Text = "Для просмотра подробностей заказа \r\nщелкните дважды левой кнопкой мыши по строке " +
     "нужного заказа :)\r\n";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(844, 353);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(166, 36);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Добавить фильтры";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(466, 353);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(166, 36);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "Удалить заказ";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(83, 353);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(166, 36);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "Изменить заказ";
-            this.button6.UseVisualStyleBackColor = true;
             // 
             // menuStrip
             // 
@@ -210,7 +180,7 @@
             this.AddTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddOrderTSMItem,
             this.AddDishTSMItem,
-            this.ресторанToolStripMenuItem,
+            this.AddRestTSMItem,
             this.AddCustTSMItem});
             this.AddTSMenuItem.Name = "AddTSMenuItem";
             this.AddTSMenuItem.Size = new System.Drawing.Size(123, 24);
@@ -219,27 +189,30 @@
             // AddOrderTSMItem
             // 
             this.AddOrderTSMItem.Name = "AddOrderTSMItem";
-            this.AddOrderTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddOrderTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddOrderTSMItem.Text = "Заказ";
             this.AddOrderTSMItem.Click += new System.EventHandler(this.AddOrderTSMItem_Click);
             // 
             // AddDishTSMItem
             // 
             this.AddDishTSMItem.Name = "AddDishTSMItem";
-            this.AddDishTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddDishTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddDishTSMItem.Text = "Блюдо";
+            this.AddDishTSMItem.Click += new System.EventHandler(this.AddDishTSMItem_Click);
             // 
-            // ресторанToolStripMenuItem
+            // AddRestTSMItem
             // 
-            this.ресторанToolStripMenuItem.Name = "ресторанToolStripMenuItem";
-            this.ресторанToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.ресторанToolStripMenuItem.Text = "Ресторан";
+            this.AddRestTSMItem.Name = "AddRestTSMItem";
+            this.AddRestTSMItem.Size = new System.Drawing.Size(216, 26);
+            this.AddRestTSMItem.Text = "Ресторан";
+            this.AddRestTSMItem.Click += new System.EventHandler(this.AddRestTSMItem_Click);
             // 
             // AddCustTSMItem
             // 
             this.AddCustTSMItem.Name = "AddCustTSMItem";
-            this.AddCustTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddCustTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddCustTSMItem.Text = "Заказчик";
+            this.AddCustTSMItem.Click += new System.EventHandler(this.AddCustTSMItem_Click);
             // 
             // EditTSMenuItem
             // 
@@ -338,11 +311,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 416);
+            this.ClientSize = new System.Drawing.Size(1109, 367);
             this.Controls.Add(this.test_but);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.menuStrip);
@@ -366,9 +336,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem AddTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditTSMenuItem;
@@ -379,7 +346,7 @@
         private System.Windows.Forms.ToolStripMenuItem CustListTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddOrderTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddDishTSMItem;
-        private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AddRestTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddCustTSMItem;
         private System.Windows.Forms.ToolStripMenuItem заказToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem1;

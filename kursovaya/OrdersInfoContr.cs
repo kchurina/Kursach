@@ -8,10 +8,17 @@ namespace kursovaya
     public class OrdersInfoContr
     {
         private Order_data order;
+        private DBContr db_contr;
 
         public OrdersInfoContr(Order_data new_ord)
         {
             order = new_ord;
+            db_contr = new DBContr();
+        }
+
+        public OrdersInfoContr()
+        {
+            db_contr = new DBContr();
         }
 
         public void Set_order(Order_data new_ord)
@@ -23,37 +30,15 @@ namespace kursovaya
         {
             return order;
         }
-
-        public void Add_rest(string rest_name)
+        
+        public void Set_rest(Restaurant new_rest)
         {
-            Restaurant new_rest = new Restaurant();
-
-            new_rest.set_rest_name(rest_name);
             order.set_rest(new_rest);
         }
 
-        public bool CheckExist(string name)
+        public Restaurant Get_rest()
         {
-            Restaurant rest = order.get_rest();
-            
-                if (String.Equals(name, rest.get_rest_name()))
-                {
-                    return true;
-                }
-            
-            return false;
-        }
-
-        public Restaurant FindRest(string name)
-        {
-            Restaurant rest = order.get_rest();
-            
-                if (String.Equals(name, rest.get_rest_name()))
-                {
-                    return rest;
-                }
-            
-            return null;
+            return order.get_rest();
         }
 
         public void Change_order(string name, string date, string c_name, string tel, string cost, string status)
@@ -64,21 +49,7 @@ namespace kursovaya
             order.get_customer().get_cust_tel().set_value(tel);
             order.get_fin_cost().set_value(cost);
             order.get_status().set_value(status);
-
+            ///
         }
-
-        /*public void DelRest(string rest_name)
-        {
-            List<Restaurant> rest_list = order.get_rest();
-            for (int i = 0; i < rest_list.Count; i++)
-            {
-                if (String.Equals(rest_list[i].get_rest_name(), rest_name))
-                {
-                    rest_list.RemoveAt(i);
-                    break;
-                }
-            }
-        }*/
-
     }
 }

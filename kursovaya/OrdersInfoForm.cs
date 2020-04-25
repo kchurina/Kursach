@@ -82,10 +82,7 @@ namespace kursovaya
             DeleteOrderForm del_form = new DeleteOrderForm(mngr_contr);
             del_form.Show();
         }*/
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-        }
+                
 
         private void RestListTSMItem_Click(object sender, EventArgs e)
         {
@@ -135,15 +132,33 @@ namespace kursovaya
         {
             //db_contr.AddDish();
         }
-        /*
-        private void button3_Click(object sender, EventArgs e)
+
+        private void AddDishTSMItem_Click(object sender, EventArgs e)
         {
-            FiltersContr filter_controler = new FiltersContr();
-            FilterForm frm_filter = new FilterForm(filter_controler);
-            frm_filter.Show();
+            AddDishForm add_dish_f = new AddDishForm();
+            add_dish_f.Show();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void AddRestTSMItem_Click(object sender, EventArgs e)
+        {
+            AddRestForm add_rest_f = new AddRestForm();
+            add_rest_f.Show();
+        }
+
+        private void AddCustTSMItem_Click(object sender, EventArgs e)
+        {
+            AddCustForm add_cust_f = new AddCustForm();
+            add_cust_f.Show();
+        }
+        /*
+private void button3_Click(object sender, EventArgs e)
+{
+FiltersContr filter_controler = new FiltersContr();
+FilterForm frm_filter = new FilterForm(filter_controler);
+frm_filter.Show();
+}
+
+private void button6_Click(object sender, EventArgs e)
 {
 GetOrdNameForm get_form = new GetOrdNameForm(mngr_contr);
 get_form.Show();

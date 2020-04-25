@@ -43,9 +43,6 @@ namespace kursovaya
 
             NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO restaurant(rest_name) VALUES ('" + rest.get_rest_name() + "') RETURNING rest_id_p", npgSqlConnection);
             string id = add_commadn.ExecuteScalar().ToString();
-
-            add_commadn.ExecuteScalar().ToString();
-
             npgSqlConnection.Close();
             return id;
         }
@@ -55,7 +52,7 @@ namespace kursovaya
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
-            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO customer(fname, tel) VALUES ('" +cust.get_cust_name().get_value() +"', '"+cust.get_cust_tel().get_value()+"') RETURNING cus_id_p", npgSqlConnection);
+            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO customer(fname, tel) VALUES ('" +cust.get_cust_name().get_value() +"', '"+cust.get_cust_tel().get_value()+"') RETURNING cust_id_p", npgSqlConnection);
             string id = add_commadn.ExecuteScalar().ToString();
 
             npgSqlConnection.Close();
@@ -165,7 +162,7 @@ namespace kursovaya
             return ord_mngr.get_orders_list();
         }
 
-        public List<Restaurant> Get_rests_from_db()
+        public List<Restaurant> Get_db_rests()
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
@@ -187,7 +184,7 @@ namespace kursovaya
             return rests_list;
         }
 
-        public List<Dish> Get_dishes_from_db()
+        public List<Dish> Get_db_dishes()
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
@@ -212,7 +209,7 @@ namespace kursovaya
             return dishes_list;
         }
 
-        public List<Customer> Get_custs_from_db()
+        public List<Customer> Get_db_custs()
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();

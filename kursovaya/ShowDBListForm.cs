@@ -12,27 +12,28 @@ namespace kursovaya
 {
     public partial class ShowDBListForm : Form
     {
-        private DBContr db_contr= new DBContr();
 
         public ShowDBListForm(List<Restaurant> rests_list)
         {            
             InitializeComponent();
-            rests_list = db_contr.Get_rests_from_db();
+            RestInfoContr rest_contr = new RestInfoContr();
+            rests_list = rest_contr.GetRestsList();
             Show_rests(rests_list);
         }
 
         public ShowDBListForm(List<Dish> dishes_list)
         {
             InitializeComponent();
-            dishes_list = db_contr.Get_dishes_from_db();
+            DishInfoContr dish_contr = new DishInfoContr();
+            dishes_list = dish_contr.GetDisheList();
             Show_dishes(dishes_list);
         }
 
         public ShowDBListForm(List<Customer> custs_list)
         {
             InitializeComponent();
-            custs_list = db_contr.Get_custs_from_db();
-            Show_custs(custs_list);
+            CustInfoContr cust_contr = new CustInfoContr();
+            Show_custs(cust_contr.GetCustsList());
         }
 
         private void Show_custs(List<Customer> custs)

@@ -48,7 +48,7 @@
             this.AddRestTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddCustTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditOrdetTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.блюдоToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ресторанToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +73,7 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7});
-            this.listView1.Location = new System.Drawing.Point(12, 46);
+            this.listView1.Location = new System.Drawing.Point(12, 43);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1057, 242);
             this.listView1.TabIndex = 0;
@@ -84,12 +84,12 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Название заказа";
-            this.columnHeader1.Width = 150;
+            this.columnHeader1.Width = 138;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Дата заказа";
-            this.columnHeader2.Width = 150;
+            this.columnHeader2.Width = 166;
             // 
             // columnHeader3
             // 
@@ -99,7 +99,7 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Телефон заказчика";
-            this.columnHeader4.Width = 150;
+            this.columnHeader4.Width = 153;
             // 
             // columnHeader5
             // 
@@ -109,12 +109,12 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "Статус заказа";
-            this.columnHeader6.Width = 150;
+            this.columnHeader6.Width = 171;
             // 
             // columnHeader7
             // 
             this.columnHeader7.Text = "Кол-во блюд";
-            this.columnHeader7.Width = 147;
+            this.columnHeader7.Width = 125;
             // 
             // label1
             // 
@@ -140,7 +140,7 @@
             this.UpdateTSMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1109, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1083, 28);
             this.menuStrip.TabIndex = 9;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -189,35 +189,35 @@
             // AddOrderTSMItem
             // 
             this.AddOrderTSMItem.Name = "AddOrderTSMItem";
-            this.AddOrderTSMItem.Size = new System.Drawing.Size(216, 26);
+            this.AddOrderTSMItem.Size = new System.Drawing.Size(148, 26);
             this.AddOrderTSMItem.Text = "Заказ";
             this.AddOrderTSMItem.Click += new System.EventHandler(this.AddOrderTSMItem_Click);
             // 
             // AddDishTSMItem
             // 
             this.AddDishTSMItem.Name = "AddDishTSMItem";
-            this.AddDishTSMItem.Size = new System.Drawing.Size(216, 26);
+            this.AddDishTSMItem.Size = new System.Drawing.Size(148, 26);
             this.AddDishTSMItem.Text = "Блюдо";
             this.AddDishTSMItem.Click += new System.EventHandler(this.AddDishTSMItem_Click);
             // 
             // AddRestTSMItem
             // 
             this.AddRestTSMItem.Name = "AddRestTSMItem";
-            this.AddRestTSMItem.Size = new System.Drawing.Size(216, 26);
+            this.AddRestTSMItem.Size = new System.Drawing.Size(148, 26);
             this.AddRestTSMItem.Text = "Ресторан";
             this.AddRestTSMItem.Click += new System.EventHandler(this.AddRestTSMItem_Click);
             // 
             // AddCustTSMItem
             // 
             this.AddCustTSMItem.Name = "AddCustTSMItem";
-            this.AddCustTSMItem.Size = new System.Drawing.Size(216, 26);
+            this.AddCustTSMItem.Size = new System.Drawing.Size(148, 26);
             this.AddCustTSMItem.Text = "Заказчик";
             this.AddCustTSMItem.Click += new System.EventHandler(this.AddCustTSMItem_Click);
             // 
             // EditTSMenuItem
             // 
             this.EditTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.заказToolStripMenuItem1,
+            this.EditOrdetTSMI,
             this.блюдоToolStripMenuItem1,
             this.ресторанToolStripMenuItem1,
             this.заказчикToolStripMenuItem});
@@ -225,11 +225,12 @@
             this.EditTSMenuItem.Size = new System.Drawing.Size(146, 24);
             this.EditTSMenuItem.Text = "Редактировать БД";
             // 
-            // заказToolStripMenuItem1
+            // EditOrdetTSMI
             // 
-            this.заказToolStripMenuItem1.Name = "заказToolStripMenuItem1";
-            this.заказToolStripMenuItem1.Size = new System.Drawing.Size(148, 26);
-            this.заказToolStripMenuItem1.Text = "Заказ";
+            this.EditOrdetTSMI.Name = "EditOrdetTSMI";
+            this.EditOrdetTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditOrdetTSMI.Text = "Заказ";
+            this.EditOrdetTSMI.Click += new System.EventHandler(this.EditOrdetTSMI_Click);
             // 
             // блюдоToolStripMenuItem1
             // 
@@ -311,7 +312,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 367);
+            this.ClientSize = new System.Drawing.Size(1083, 367);
             this.Controls.Add(this.test_but);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
@@ -348,7 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem AddDishTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddRestTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddCustTSMItem;
-        private System.Windows.Forms.ToolStripMenuItem заказToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem EditOrdetTSMI;
         private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem;

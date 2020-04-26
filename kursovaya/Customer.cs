@@ -16,7 +16,7 @@ namespace kursovaya
 
             cust_fields.Add(new CustName_field());
             cust_fields.Add(new CustTel_field());
-            cust_fields.Add(new Cust_id_p());
+            cust_fields.Add(new Cust_id_f());
         }
 
         public Order_fields get_cust_name()

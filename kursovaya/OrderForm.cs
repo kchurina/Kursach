@@ -12,48 +12,82 @@ namespace kursovaya
 {
     public partial class OrderForm : Form
     {
-        //private DBContr db_contr = new DBContr();
+        private string mode;
+
         private List<Customer> custs;
         private List<Restaurant> rests;
         private List<Dish> dishes;
-        private Order_data order = new Order_data();
         private OrderMngrContr mngr_contr;
         private DishInfoContr dish_contr;
         private RestInfoContr rest_contr;
         private CustInfoContr cust_contr;
+        private OrdersInfoContr ord_contr;
 
-        private List<ComboBox> DishCB_list = new List<ComboBox>();
-        private List<TextBox> DishTB_list = new List<TextBox>();
-        private List<Label> dish_name_list = new List<Label>();
-        private List<Label> dish_col_list = new List<Label>();
-        private List<Label> num_list = new List<Label>();
+        private List<ComboBox> DishCB_list;
+        private List<TextBox> DishTB_list;
+        private List<Label> dish_name_list;
+        private List<Label> dish_col_list;
+        private List<Label> num_list;
 
-        public OrderForm(OrderMngrContr new_mngr_contr)
+        public OrderForm(OrderMngrContr new_mngr_contr, string new_mode)
         {            
             InitializeComponent();
             dish_contr = new DishInfoContr();
             rest_contr = new RestInfoContr();
             cust_contr = new CustInfoContr();
 
+            DishCB_list = new List<ComboBox>();
+            DishTB_list = new List<TextBox>();
+            dish_name_list = new List<Label>();
+            dish_col_list = new List<Label>();
+            num_list = new List<Label>();
+
             dishes = dish_contr.GetDisheList();
             rests = rest_contr.GetRestsList();
             custs = cust_contr.GetCustsList();
             mngr_contr = new_mngr_contr;
+            mode = new_mode;
 
             Display(custs, rests);
         }
 
         private void Display(List<Customer> custs, List<Restaurant> rests)
         {
-            foreach(Customer cust in custs)
-            { 
-                CustomerCB.Items.Add(cust.get_cust_id_p().get_value() + "  " +cust.get_cust_name().get_value());
+            if (String.Equals(mode, "add"))
+            {
+                foreach (Customer cust in custs)
+                {
+                    CustomerCB.Items.Add(cust.get_cust_id_p().get_value() + "  " + cust.get_cust_name().get_value());
+                }
+
+                foreach (Restaurant rest in rests)
+                {
+                    RestCB.Items.Add(rest.get_rest_id() + "  " + rest.get_rest_name());
+                }
+
+                IdCB.Enabled = false;
             }
 
-            foreach(Restaurant rest in rests)
+            if (String.Equals(mode, "edit"))
             {
-                RestCB.Items.Add(rest.get_rest_id() + "  " + rest.get_rest_name());
+                AddOrderButton.Text = "Сохранить изменения";
+                IdCB.Enabled = true;
+                foreach (Customer cust in custs)
+                {
+                    CustomerCB.Items.Add(cust.get_cust_id_p().get_value() + "  " + cust.get_cust_name().get_value());
+                }
+
+                foreach (Restaurant rest in rests)
+                {
+                    RestCB.Items.Add(rest.get_rest_id() + "  " + rest.get_rest_name());
+                }
+
+                foreach(Order_data ord in mngr_contr.Get_mngr().get_orders_list())
+                {
+                    IdCB.Items.Add(ord.get_ord_name().get_value());
+                }
             }
+
         }
 
         private void CustomerCB_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,6 +151,24 @@ namespace kursovaya
 
         }
 
+        private void clean_field()
+        {
+            for (int i=0; i< DishCB_list.Count; i++)
+            {
+                this.Controls.Remove(DishCB_list[i]);
+                this.Controls.Remove(DishTB_list[i]);
+                this.Controls.Remove(dish_name_list[i]);
+                this.Controls.Remove(dish_col_list[i]);
+                this.Controls.Remove(num_list[i]);
+            }
+
+            DishCB_list.Clear();
+            DishTB_list.Clear();
+            dish_name_list.Clear();
+            dish_col_list.Clear();
+            num_list.Clear();
+        }
+
         private void DelButton_Click(object sender, EventArgs e)
         {
             if(DelTextBox.Text=="")
@@ -151,6 +203,7 @@ namespace kursovaya
 
         private void AddOrderButton_Click(object sender, EventArgs e)
         {
+
             Restaurant rest = new Restaurant();
             Customer cust = new Customer();
             List<Dish> new_dish_list = new List<Dish>();
@@ -174,7 +227,7 @@ namespace kursovaya
             {
                 foreach (Dish d in dishes)
                 {
-                    if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()),DishCB_list[i].Text))
+                    if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()), DishCB_list[i].Text))
                     {
                         Dish new_d = new Dish();
                         new_d.get_nmb_field().set_value(DishTB_list[i].Text);
@@ -186,7 +239,62 @@ namespace kursovaya
                     }
                 }
             }
-            mngr_contr.Add_new_order("0", "0", dateTimePicker.Text, costTB.Text, statusLB.Text, rest, cust, new_dish_list);
+            if (String.Equals(mode, "add"))
+            {
+                mngr_contr.Add_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list);
+            }
+            if (String.Equals(mode, "edit"))
+            {
+                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                OrdersInfoContr ord_contr2 = new OrdersInfoContr(mngr_contr.Create_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list));
+                if (!ord_contr.Check_status_date_equal(ord_contr2.Get_order()))
+                {
+                    if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
+                    {
+                        Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
+                        ord_contr.Change_ord_field(ord_contr2.Get_order().get_status());
+                    }
+                    if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
+                    {
+                        Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
+                        ord_contr.Change_ord_field(ord_contr2.Get_order().get_event_date());
+                    }
+                }
+                foreach(Dish d in ord_contr.Get_order().get_dishes_list())
+                {
+                    if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
+                    {
+                        Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
+                    }
+                }
+
+                foreach(Dish d in ord_contr2.Get_order().get_dishes_list())
+                {
+                    if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
+                    {
+                        Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
+                    }
+                }
+
+                foreach (Dish d2 in ord_contr2.Get_order().get_dishes_list())
+                {
+                    foreach(Dish d in ord_contr.Get_order().get_dishes_list())
+                    {
+                        if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()) && !String.Equals(d.get_nmb_field().get_value(), d2.get_nmb_field().get_value()))
+                            Console.WriteLine("Chande col of dish " + d.get_dish_id_field().get_value() + " from " + d.get_nmb_field().get_value() + " to " + d2.get_nmb_field().get_value());
+                    }
+                }
+
+                if(!ord_contr.Check_exist_rest(ord_contr2.Get_rest().get_rest_id()))
+                {
+                    Console.WriteLine("Change rest to " + ord_contr2.Get_rest().get_rest_id());
+                }
+
+                if(!ord_contr.Check_exist_cust(ord_contr2.Get_cust().get_cust_id_p().get_value()))
+                {
+                    Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
+                }
+            }
         }
 
         private void countButton_Click(object sender, EventArgs e)
@@ -205,6 +313,24 @@ namespace kursovaya
                 }
 
                 costTB.Text = final_price.ToString();
+            }
+        }
+
+        private void IdCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+
+            CustomerCB.Text = ord_contr.Get_order().get_customer().get_cust_id_p().get_value() + "  " + ord_contr.Get_order().get_customer().get_cust_name().get_value();
+            RestCB.Text = ord_contr.Get_order().get_rest().get_rest_id() + "  " + ord_contr.Get_order().get_rest().get_rest_name();
+            dateTimePicker.Text = ord_contr.Get_order().get_event_date().get_value();
+            clean_field();
+            costTB.Text = ord_contr.Get_order().get_fin_cost().get_value();
+            
+            for(int i=0; i<Convert.ToInt32(ord_contr.Get_order().get_dishes_list().Count); i++ )
+            {
+                field(i);
+                DishCB_list[i].Text = ord_contr.Get_dish_of_order(i).get_dish_id_field().get_value() + "  " + ord_contr.Get_dish_of_order(i).get_name_field().get_value();
+                DishTB_list[i].Text = ord_contr.Get_dish_of_order(i).get_nmb_field().get_value();
             }
         }
     }

@@ -12,7 +12,7 @@ namespace kursovaya
 {
     public partial class MainForm : Form
     {
-        private OrdersManager ord_mngr = new OrdersManager();
+        private OrdersManager ord_mngr;
         private List<Order_data> orders;
         private OrderMngrContr mngr_contr;
         private DBContr db_contr;
@@ -21,7 +21,7 @@ namespace kursovaya
         {
             db_contr = new DBContr();
             orders = db_contr.Load_from_db();
-            
+            ord_mngr = new OrdersManager();
 
             ord_mngr.set_orders_list(orders);
             mngr_contr = new OrderMngrContr(ord_mngr);
@@ -49,6 +49,7 @@ namespace kursovaya
 
         public void Display()
         {
+            orders = ord_mngr.get_orders_list();
             int count_itms = orders.Count();
             Console.WriteLine(count_itms);
             listView1.FullRowSelect = true;
@@ -111,6 +112,7 @@ namespace kursovaya
             }
 
             ord_mngr = new OrdersManager();
+
             ord_mngr.set_orders_list(db_contr.Load_from_db());
 
             foreach (Order_data ord in ord_mngr.get_orders_list())
@@ -124,7 +126,7 @@ namespace kursovaya
 
         private void AddOrderTSMItem_Click(object sender, EventArgs e)
         {
-            OrderForm order_form = new OrderForm(mngr_contr);
+            OrderForm order_form = new OrderForm(mngr_contr, "add");
             order_form.Show();
         }
 
@@ -149,6 +151,12 @@ namespace kursovaya
         {
             AddCustForm add_cust_f = new AddCustForm();
             add_cust_f.Show();
+        }
+
+        private void EditOrdetTSMI_Click(object sender, EventArgs e)
+        {
+            OrderForm edit_ord_f = new OrderForm(mngr_contr, "edit");
+            edit_ord_f.Show();
         }
         /*
 private void button3_Click(object sender, EventArgs e)

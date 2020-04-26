@@ -129,9 +129,5 @@ namespace kursovaya
             dishes.Add(new_dish);
         }
 
-        public Dish get_dish_of_order(int i)
-        {
-            return dishes[i];
-        }
     }
 }

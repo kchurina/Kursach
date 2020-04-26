@@ -75,28 +75,29 @@ namespace kursovaya
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
-            NpgsqlCommand Order_data_Command = new NpgsqlCommand("SELECT customer.fname, customer.tel, customer.cust_id_p, oorder.order_date, oorder.order_id_p, oorder.rest_id_f FROM customer, oorder WHERE oorder.cust_id_f=customer.cust_id_p", npgSqlConnection);
+            NpgsqlCommand Order_data_Command = new NpgsqlCommand("SELECT customer.fname, customer.tel, customer.cust_id_p, oorder.order_date, oorder.order_id_p, oorder.rest_id_f, oorder.status FROM customer, oorder WHERE oorder.cust_id_f=customer.cust_id_p", npgSqlConnection);
             NpgsqlCommand Dish_command = new NpgsqlCommand("SELECT dish.dish_name, dish.dish_id_p, dish.price, ordered.num, ordered.oredered_dish_price, ordered.order_id_p, oorder.rest_id_f FROM dish, ordered, oorder WHERE dish.dish_id_p=ordered.dish_id_p AND ordered.order_id_p=oorder.order_id_p", npgSqlConnection);
             NpgsqlCommand Rest_command = new NpgsqlCommand("SELECT restaurant.rest_name, restaurant.rest_id_p FROM restaurant", npgSqlConnection);
 
             OrdersManager ord_mngr = new OrdersManager();
             NpgsqlDataReader Order_data_reader = Order_data_Command.ExecuteReader();
-            
+
             foreach (DbDataRecord Odr in Order_data_reader)
-            { 
-                    Order_data order_data = new Order_data();
-                    Customer cust = new Customer();
+            {
+                Order_data order_data = new Order_data();
+                Customer cust = new Customer();
 
-                    order_data.get_ord_name().set_value(Odr["order_id_p"].ToString());
-                    cust.get_cust_id_p().set_value(Odr["cust_id_p"].ToString());
-                    order_data.get_event_date().set_value(Odr["order_date"].ToString());
-                    order_data.get_rest_id_f().set_value(Odr["rest_id_f"].ToString());
-                    cust.get_cust_name().set_value(Odr["fname"].ToString());
-                    cust.get_cust_tel().set_value(Odr["tel"].ToString());
+                order_data.get_ord_name().set_value(Odr["order_id_p"].ToString());
+                order_data.get_status().set_value(Odr["status"].ToString());
+                cust.get_cust_id_p().set_value(Odr["cust_id_p"].ToString());
+                order_data.get_event_date().set_value(Odr["order_date"].ToString());
+                order_data.get_rest_id_f().set_value(Odr["rest_id_f"].ToString());
+                cust.get_cust_name().set_value(Odr["fname"].ToString());
+                cust.get_cust_tel().set_value(Odr["tel"].ToString());
 
-                    order_data.set_customer(cust);
+                order_data.set_customer(cust);
 
-                    ord_mngr.add_order(order_data);
+                ord_mngr.add_order(order_data);
             }
             Order_data_reader.Close();
 
@@ -231,6 +232,17 @@ namespace kursovaya
             npgSqlConnection.Close();
 
             return custs_list;
+        }
+
+        public void Edit_order_field(Order_fields field, String id)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand ord_commadn = new NpgsqlCommand("UPDATE oorder SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE order_id_p=" +  Convert.ToInt32(id), npgSqlConnection);
+            ord_commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
         }
     }
 }

@@ -37,6 +37,22 @@ namespace kursovaya
             return new_ord;
         }
 
+        public Order_data Create_new_order(string order_id_p, string cust_id_p, string date, string cost, string status, Restaurant rest, Customer cust, List<Dish> dishes_list)
+        {
+            Order_data new_ord = new Order_data();
+            new_ord.get_ord_name().set_value(order_id_p);
+            new_ord.get_event_date().set_value(date);
+            new_ord.get_fin_cost().set_value(cost);
+            new_ord.get_status().set_value(status);
+
+
+            new_ord.set_customer(cust);
+            new_ord.set_rest(rest);
+            new_ord.set_dishes_list(dishes_list);
+            
+            return new_ord;
+        }
+
         public void Add_dish_to_order(Order_data order, Dish new_dish)
         {
             order.get_dishes_list().Add(new_dish);

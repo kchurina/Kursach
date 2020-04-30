@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(919, 299);
+            this.ClientSize = new System.Drawing.Size(865, 262);
             this.Name = "RestAndDishesForm";
             this.Text = "Restaurant and dishes info";
             this.Load += new System.EventHandler(this.RestAndDishesForm_Load);

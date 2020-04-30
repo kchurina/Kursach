@@ -16,7 +16,6 @@ namespace kursovaya
             fields.Add(new Cost_field());
             fields.Add(new Nmb_field());
             fields.Add(new Order_id_p());
-            fields.Add(new Rest_Id_f());
             fields.Add(new Dish_id_p());
         }
         
@@ -55,14 +54,10 @@ namespace kursovaya
             return fields[3];
         }
 
-        public Dish_fields get_rest_id_field()
-        {
-            return fields[4];
-        }
 
         public Dish_fields get_dish_id_field()
         {
-            return fields[5];
+            return fields[4];
         }
 
     }

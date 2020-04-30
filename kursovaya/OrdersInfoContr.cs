@@ -46,7 +46,7 @@ namespace kursovaya
             return order.get_customer();
         }
 
-        public void Change_ord_field(Order_fields field)
+        public void Edit_ord_field(Order_fields field)
         {
             db_contr.Edit_order_field(field, order.get_ord_name().get_value());
         }
@@ -89,6 +89,22 @@ namespace kursovaya
         public Dish Get_dish_of_order(int i)
         {
             return order.get_dishes_list()[i];
+        }
+
+        public void Add_dish_to_order(Dish dish)
+        {
+            int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
+            db_contr.AddDish_to_order(order.get_ord_name().get_value(), dish.get_dish_id_field().get_value(), dish.get_nmb_field().get_value(), price.ToString());
+        }
+
+        public void DelDish_from_order(Dish d)
+        {
+            db_contr.DelDish_from_order(order.get_ord_name().get_value(), d.get_dish_id_field().get_value());
+        }
+
+        public void Delete_order()
+        {
+            db_contr.Delete_order(order.get_ord_name().get_value());
         }
     }
 }

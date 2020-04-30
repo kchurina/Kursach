@@ -27,7 +27,7 @@ namespace kursovaya
 
     public class Cust_id_f: Order_fields
     {
-        public Cust_id_f () { name_field = "cust_id_p: "; field_type = "int"; }
+        public Cust_id_f () { name_field = "cust_id_p: "; field_type = "int"; db_name = "cust_id_p"; }
     }
 
     public class OrdName_field : Order_fields

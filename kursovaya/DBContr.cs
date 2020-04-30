@@ -21,7 +21,7 @@ namespace kursovaya
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
-            NpgsqlCommand ord_commadn = new NpgsqlCommand("INSERT INTO oorder(rest_id_f, cust_id_f, order_date) VALUES ("+ Convert.ToInt32(order.get_rest().get_rest_id())+", "+ Convert.ToInt32(order.get_customer().get_cust_id_p().get_value())+",'"+order.get_event_date().get_value()+"') RETURNING order_id_p", npgSqlConnection);
+            NpgsqlCommand ord_commadn = new NpgsqlCommand("INSERT INTO oorder(status, rest_id_f, cust_id_f, order_date) VALUES ('"+order.get_status().get_value()+"', "+ Convert.ToInt32(order.get_rest().get_rest_id())+", "+ Convert.ToInt32(order.get_customer().get_cust_id_p().get_value())+",'"+order.get_event_date().get_value()+"') RETURNING order_id_p", npgSqlConnection);
             ord_id = Convert.ToInt32(ord_commadn.ExecuteScalar().ToString());
             Console.WriteLine(ord_id);
 
@@ -57,6 +57,28 @@ namespace kursovaya
 
             npgSqlConnection.Close();
             return id;
+        }
+
+        public void AddDish_to_order(string ord_id, string dish_id, string dish_col, string ordered_price)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO ordered VALUES (" + ord_id + ", " + dish_id + ", "+ordered_price+", "+dish_col+")", npgSqlConnection);
+            add_commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void DelDish_from_order(string ord_id, string dish_id)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand add_commadn = new NpgsqlCommand("DELETE FROM ordered WHERE order_id_p="+ord_id+" AND dish_id_p="+dish_id+"", npgSqlConnection);
+            add_commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
         }
 
         public string AddDish(Dish dish)
@@ -134,32 +156,45 @@ namespace kursovaya
                 d.get_nmb_field().set_value(Dr["num"].ToString());
                 d.get_cost_field().set_value(Dr["price"].ToString());
                 d.get_ord_id_field().set_value(Dr["order_id_p"].ToString());
-                d.get_rest_id_field().set_value(Dr["rest_id_f"].ToString());
                 d.get_dish_id_field().set_value(Dr["dish_id_p"].ToString());
 
                 foreach (Order_data ord in ord_mngr.get_orders_list())
-                {                   
-                    
-                        if (ord.get_ord_name().get_value()==d.get_ord_id_field().get_value())
-                        {
-                            Console.WriteLine(ord.get_ord_name().get_value() +"=="+ d.get_ord_id_field().get_value());
-                            ord.add_dish_to_order(d);
-                        }
-                    
+                {
+                    if (ord.get_ord_name().get_value() == d.get_ord_id_field().get_value())
+                    {
+                        Console.WriteLine(ord.get_ord_name().get_value() + "==" + d.get_ord_id_field().get_value());
+                        ord.add_dish_to_order(d);
+                    }
                 }
-                
             }
 
             Dish_data_reader.Close();
 
             foreach (Order_data ord in ord_mngr.get_orders_list())
             {
-                ord.CountDishCol();
-                ord.RecountFPrice();
-            }
 
+                if (!String.Equals(ord.get_status().get_value(), "Выполнено "))
+                {
+                    ord.CountDishCol();
+                    ord.RecountFPrice();
+                }
+                else
+                {
+                    ord.CountDishCol();
+                    int price = 0;
+                    NpgsqlCommand Price_command = new NpgsqlCommand("SELECT ordered.oredered_dish_price, ordered.order_id_p FROM ordered WHERE ordered.order_id_p=" + ord.get_ord_name().get_value(), npgSqlConnection);
+
+                    NpgsqlDataReader Price_data_reader = Price_command.ExecuteReader();
+                    foreach (DbDataRecord Pr in Price_data_reader)
+                    {
+                        price += Convert.ToInt32(Pr["oredered_dish_price"]);
+                    }
+                    Price_data_reader.Close();
+                    ord.get_fin_cost().set_value(price.ToString());
+                }
+            }
             npgSqlConnection.Close();
-                     
+
             return ord_mngr.get_orders_list();
         }
 
@@ -234,13 +269,126 @@ namespace kursovaya
             return custs_list;
         }
 
-        public void Edit_order_field(Order_fields field, String id)
+        public void Edit_order_field(Order_fields field, string id)
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
             NpgsqlCommand ord_commadn = new NpgsqlCommand("UPDATE oorder SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE order_id_p=" +  Convert.ToInt32(id), npgSqlConnection);
             ord_commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Edit_cust_field(Order_fields field, string id)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE customer SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE cust_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Edit_rest(string rest_name, string id)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE restaurant SET rest_name='" + rest_name + "' WHERE rest_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Edit_dish_field(Dish_fields field, string id)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE dish SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE dish_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Delete_cust(string id)
+        {
+            List<string> ordrs_id = new List<string>();
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn0 = new NpgsqlCommand("SELECT order_id_p FROM oorder WHERE cust_id_f=" + Convert.ToInt32(id), npgSqlConnection);
+            NpgsqlDataReader Order_data_reader = commadn0.ExecuteReader();
+
+            foreach (DbDataRecord Ord in Order_data_reader)
+            {
+                ordrs_id.Add(Ord["order_id_p"].ToString());
+            }
+            Order_data_reader.Close();
+
+            foreach (string ord_id in ordrs_id)
+            {
+                NpgsqlCommand commadn1 = new NpgsqlCommand("DELETE FROM ordered WHERE order_id_p = " + Convert.ToInt32(ord_id)+"; DELETE FROM oorder WHERE order_id_p=" + Convert.ToInt32(ord_id), npgSqlConnection);
+                commadn1.ExecuteScalar();
+            }
+            NpgsqlCommand commadn2 = new NpgsqlCommand("DELETE FROM customer WHERE cust_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn2.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Delete_rest(string id)
+        {
+            List<string> ordrs_id = new List<string>();
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn0 = new NpgsqlCommand("SELECT order_id_p FROM oorder WHERE rest_id_f=" + Convert.ToInt32(id), npgSqlConnection);
+            NpgsqlDataReader Order_data_reader = commadn0.ExecuteReader();
+
+            foreach (DbDataRecord Ord in Order_data_reader)
+            {
+                ordrs_id.Add(Ord["order_id_p"].ToString());
+            }
+            Order_data_reader.Close();
+
+            foreach (string ord_id in ordrs_id)
+            {
+                NpgsqlCommand commadn1 = new NpgsqlCommand("DELETE FROM ordered WHERE order_id_p = " + Convert.ToInt32(ord_id) + "; DELETE FROM oorder WHERE order_id_p=" + Convert.ToInt32(ord_id), npgSqlConnection);
+                commadn1.ExecuteScalar();
+            }
+            NpgsqlCommand commadn2 = new NpgsqlCommand("DELETE FROM restaurant WHERE rest_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn2.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Delete_dish(string id)
+        {
+            List<string> ordrs_id = new List<string>();
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn0 = new NpgsqlCommand("DELETE FROM ordered WHERE dish_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn0.ExecuteScalar();
+            NpgsqlCommand commadn1 = new NpgsqlCommand("DELETE FROM dish WHERE dish_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn1.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Delete_order(string id)
+        {
+            List<string> ordrs_id = new List<string>();
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            NpgsqlCommand commadn0 = new NpgsqlCommand("DELETE FROM ordered WHERE order_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn0.ExecuteScalar();
+            NpgsqlCommand commadn1 = new NpgsqlCommand("DELETE FROM oorder WHERE order_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+            commadn1.ExecuteScalar();
 
             npgSqlConnection.Close();
         }

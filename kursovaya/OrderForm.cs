@@ -42,7 +42,7 @@ namespace kursovaya
             dish_col_list = new List<Label>();
             num_list = new List<Label>();
 
-            dishes = dish_contr.GetDisheList();
+            dishes = dish_contr.GetDishesList();
             rests = rest_contr.GetRestsList();
             custs = cust_contr.GetCustsList();
             mngr_contr = new_mngr_contr;
@@ -88,6 +88,34 @@ namespace kursovaya
                 }
             }
 
+            if(String.Equals(mode, "delete"))
+            {
+                AddOrderButton.Text = "Удалить";
+                IdCB.Enabled = true;
+                foreach (Customer cust in custs)
+                {
+                    CustomerCB.Items.Add(cust.get_cust_id_p().get_value() + "  " + cust.get_cust_name().get_value());
+                }
+
+                foreach (Restaurant rest in rests)
+                {
+                    RestCB.Items.Add(rest.get_rest_id() + "  " + rest.get_rest_name());
+                }
+
+                foreach (Order_data ord in mngr_contr.Get_mngr().get_orders_list())
+                {
+                    IdCB.Items.Add(ord.get_ord_name().get_value());
+                }
+
+                dateTimePicker.Enabled = false;
+                CustomerCB.Enabled = false;
+                RestCB.Enabled = false;
+                statusLB.Enabled = false;
+                addDishButton.Visible = false;
+                DelButton.Visible = false;
+                DelTextBox.Visible = false;
+                countButton.Visible = false;
+            }
         }
 
         private void CustomerCB_SelectedIndexChanged(object sender, EventArgs e)
@@ -252,12 +280,12 @@ namespace kursovaya
                     if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
                     {
                         Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
-                        ord_contr.Change_ord_field(ord_contr2.Get_order().get_status());
+                        ord_contr.Edit_ord_field(ord_contr2.Get_order().get_status());
                     }
                     if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
                     {
                         Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
-                        ord_contr.Change_ord_field(ord_contr2.Get_order().get_event_date());
+                        ord_contr.Edit_ord_field(ord_contr2.Get_order().get_event_date());
                     }
                 }
                 foreach(Dish d in ord_contr.Get_order().get_dishes_list())
@@ -265,6 +293,7 @@ namespace kursovaya
                     if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
                     {
                         Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
+                        ord_contr.DelDish_from_order(d);
                     }
                 }
 
@@ -273,6 +302,7 @@ namespace kursovaya
                     if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
                     {
                         Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
+                        ord_contr.Add_dish_to_order(d);
                     }
                 }
 
@@ -294,6 +324,12 @@ namespace kursovaya
                 {
                     Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
                 }
+            }
+
+            if(String.Equals(mode, "delete"))
+            {
+                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                ord_contr.Delete_order();
             }
         }
 
@@ -331,6 +367,14 @@ namespace kursovaya
                 field(i);
                 DishCB_list[i].Text = ord_contr.Get_dish_of_order(i).get_dish_id_field().get_value() + "  " + ord_contr.Get_dish_of_order(i).get_name_field().get_value();
                 DishTB_list[i].Text = ord_contr.Get_dish_of_order(i).get_nmb_field().get_value();
+            }
+            if (String.Equals(mode, "delete"))
+            {
+                for (int i = 0; i < DishCB_list.Count; i++)
+                {
+                    DishCB_list[i].Enabled = false;
+                    DishTB_list[i].Enabled = false;
+                }
             }
         }
     }

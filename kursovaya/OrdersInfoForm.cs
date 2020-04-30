@@ -25,7 +25,7 @@ namespace kursovaya
 
             ord_mngr.set_orders_list(orders);
             mngr_contr = new OrderMngrContr(ord_mngr);
-            
+
             InitializeComponent();
         }
 
@@ -36,14 +36,18 @@ namespace kursovaya
             foreach (Order_data ord in orders)
             {
                 Console.WriteLine("@");
-                Console.WriteLine(ord.get_ord_name().get_value() +" "+ord.get_customer().get_cust_name().get_value());
+                Console.WriteLine(ord.get_ord_name().get_value() + " " + ord.get_customer().get_cust_name().get_value());
 
                 Console.WriteLine("     !" + ord.get_rest().get_rest_name());
                 foreach (Dish dish in ord.get_dishes_list())
                 {
-                    Console.WriteLine("         " + dish.get_ord_id_field().get_value() +" "+dish.get_name_field().get_value());
+                    Console.WriteLine("         " + dish.get_ord_id_field().get_value() + " " + dish.get_name_field().get_value());
                 }
-
+                if (Convert.ToInt32(ord.get_dish_col().get_value()) == 0)
+                {
+                    OrdersInfoContr ord_contr = new OrdersInfoContr(ord);
+                    ord_contr.Delete_order();
+                }
             }
         }
 
@@ -78,13 +82,6 @@ namespace kursovaya
             rest_form.Show();
         }
         
-        /*private void button4_Click(object sender, EventArgs e)
-        {
-            DeleteOrderForm del_form = new DeleteOrderForm(mngr_contr);
-            del_form.Show();
-        }*/
-                
-
         private void RestListTSMItem_Click(object sender, EventArgs e)
         {
             ShowDBListForm show_form = new ShowDBListForm(new List<Restaurant>());
@@ -111,13 +108,16 @@ namespace kursovaya
                 listView1.Items.Clear();
             }
 
-            ord_mngr = new OrdersManager();
-
             ord_mngr.set_orders_list(db_contr.Load_from_db());
 
             foreach (Order_data ord in ord_mngr.get_orders_list())
             {
-                if(String.Equals(ord.get_status().get_value(), "В процессе уточнения"))
+                if (Convert.ToInt32(ord.get_dish_col().get_value()) == 0)
+                {
+                    OrdersInfoContr ord_contr = new OrdersInfoContr(ord);
+                    ord_contr.Delete_order();
+                }
+                if (String.Equals(ord.get_status().get_value(), "В процессе уточнения"))
                     ord.RecountFPrice();
                 ord.CountDishCol();
             }
@@ -130,26 +130,21 @@ namespace kursovaya
             order_form.Show();
         }
 
-        private void test_but_Click(object sender, EventArgs e)
-        {
-            //db_contr.AddDish();
-        }
-
         private void AddDishTSMItem_Click(object sender, EventArgs e)
         {
-            AddDishForm add_dish_f = new AddDishForm();
+            DishForm add_dish_f = new DishForm("add");
             add_dish_f.Show();
         }
 
         private void AddRestTSMItem_Click(object sender, EventArgs e)
         {
-            AddRestForm add_rest_f = new AddRestForm();
+            RestForm add_rest_f = new RestForm("add");
             add_rest_f.Show();
         }
 
         private void AddCustTSMItem_Click(object sender, EventArgs e)
         {
-            AddCustForm add_cust_f = new AddCustForm();
+            CustForm add_cust_f = new CustForm("add");
             add_cust_f.Show();
         }
 
@@ -158,18 +153,48 @@ namespace kursovaya
             OrderForm edit_ord_f = new OrderForm(mngr_contr, "edit");
             edit_ord_f.Show();
         }
-        /*
-private void button3_Click(object sender, EventArgs e)
-{
-FiltersContr filter_controler = new FiltersContr();
-FilterForm frm_filter = new FilterForm(filter_controler);
-frm_filter.Show();
-}
 
-private void button6_Click(object sender, EventArgs e)
-{
-GetOrdNameForm get_form = new GetOrdNameForm(mngr_contr);
-get_form.Show();
-}*/
+        private void EditCustTSIM_Click(object sender, EventArgs e)
+        {
+            CustForm cust_f = new CustForm("edit");
+            cust_f.Show();
+        }
+
+        private void DelCustTCMI_Click(object sender, EventArgs e)
+        {
+            CustForm cust_f = new CustForm("delete");
+            cust_f.Show();
+        }
+
+        private void DelRestTSMI_Click(object sender, EventArgs e)
+        {
+            RestForm rest_f = new RestForm("delete");
+            rest_f.Show();
+        }
+
+        private void EditRestTSMI_Click(object sender, EventArgs e)
+        {
+            RestForm rest_f = new RestForm("edit");
+            rest_f.Show();
+        }
+
+        private void EditDishTSMI_Click(object sender, EventArgs e)
+        {
+            DishForm dish_f = new DishForm("edit");
+            dish_f.Show();
+        }
+
+        private void DelDishTSMI_Click(object sender, EventArgs e)
+        {
+            DishForm dish_f = new DishForm("delete");
+            dish_f.Show();
+        }
+
+        private void DelOrdTSMI_Click(object sender, EventArgs e)
+        {
+            OrderForm ord_f = new OrderForm(mngr_contr, "delete");
+            ord_f.Show();
+        }
+    
     }
 }

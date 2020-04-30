@@ -77,23 +77,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddCustForm.cs">
+    <Compile Include="CustForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddCustForm.Designer.cs">
-      <DependentUpon>AddCustForm.cs</DependentUpon>
+    <Compile Include="CustForm.Designer.cs">
+      <DependentUpon>CustForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddDishForm.cs">
+    <Compile Include="DishForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddDishForm.Designer.cs">
-      <DependentUpon>AddDishForm.cs</DependentUpon>
+    <Compile Include="DishForm.Designer.cs">
+      <DependentUpon>DishForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddRestForm.cs">
+    <Compile Include="RestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddRestForm.Designer.cs">
-      <DependentUpon>AddRestForm.cs</DependentUpon>
+    <Compile Include="RestForm.Designer.cs">
+      <DependentUpon>RestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CustInfoContr.cs" />
     <Compile Include="DishInfoContr.cs" />
@@ -134,14 +134,14 @@
     </Compile>
     <Compile Include="Restaurant.cs" />
     <Compile Include="DBContr.cs" />
-    <EmbeddedResource Include="AddCustForm.resx">
-      <DependentUpon>AddCustForm.cs</DependentUpon>
+    <EmbeddedResource Include="CustForm.resx">
+      <DependentUpon>CustForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddDishForm.resx">
-      <DependentUpon>AddDishForm.cs</DependentUpon>
+    <EmbeddedResource Include="DishForm.resx">
+      <DependentUpon>DishForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddRestForm.resx">
-      <DependentUpon>AddRestForm.cs</DependentUpon>
+    <EmbeddedResource Include="RestForm.resx">
+      <DependentUpon>RestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>

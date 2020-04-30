@@ -25,7 +25,7 @@ namespace kursovaya
         {
             InitializeComponent();
             DishInfoContr dish_contr = new DishInfoContr();
-            dishes_list = dish_contr.GetDisheList();
+            dishes_list = dish_contr.GetDishesList();
             Show_dishes(dishes_list);
         }
 

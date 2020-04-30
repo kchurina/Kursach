@@ -143,11 +143,11 @@
             this.statusLB.FormattingEnabled = true;
             this.statusLB.ItemHeight = 16;
             this.statusLB.Items.AddRange(new object[] {
-            "Выполнено",
-            "В процессе уточнения"});
+            "Выполнено ",
+            "В процессе"});
             this.statusLB.Location = new System.Drawing.Point(163, 286);
             this.statusLB.Name = "statusLB";
-            this.statusLB.Size = new System.Drawing.Size(155, 36);
+            this.statusLB.Size = new System.Drawing.Size(103, 36);
             this.statusLB.TabIndex = 14;
             // 
             // label7

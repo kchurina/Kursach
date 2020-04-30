@@ -1,6 +1,6 @@
 ﻿namespace kursovaya
 {
-    partial class AddRestForm
+    partial class RestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,20 +31,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.IdCB = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 23);
+            this.label1.Location = new System.Drawing.Point(7, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 34);
+            this.label1.Size = new System.Drawing.Size(150, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Введите название\r\nнового ресторана:";
+            this.label1.Text = "Название ресторана:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(16, 74);
+            this.button1.Location = new System.Drawing.Point(10, 81);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(105, 37);
             this.button1.TabIndex = 4;
@@ -54,21 +56,41 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(159, 34);
+            this.textBox1.Location = new System.Drawing.Point(173, 48);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(158, 22);
             this.textBox1.TabIndex = 5;
             // 
-            // AddRestForm
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 17);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "ID ресторана";
+            // 
+            // IdCB
+            // 
+            this.IdCB.FormattingEnabled = true;
+            this.IdCB.Location = new System.Drawing.Point(173, 13);
+            this.IdCB.Name = "IdCB";
+            this.IdCB.Size = new System.Drawing.Size(158, 24);
+            this.IdCB.TabIndex = 7;
+            this.IdCB.SelectedIndexChanged += new System.EventHandler(this.IdCB_SelectedIndexChanged);
+            // 
+            // RestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 134);
+            this.ClientSize = new System.Drawing.Size(348, 129);
+            this.Controls.Add(this.IdCB);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
-            this.Name = "AddRestForm";
-            this.Text = "AddRestForm";
+            this.Name = "RestForm";
+            this.Text = "RestForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -78,5 +100,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox IdCB;
     }
 }

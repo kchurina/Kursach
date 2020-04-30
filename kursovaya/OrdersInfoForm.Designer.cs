@@ -49,17 +49,15 @@
             this.AddCustTSMItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditOrdetTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.блюдоToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ресторанToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditDishTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditRestTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditCustTSIM = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.блюдоToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ресторанToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.заказчикToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.добавитьФильтрациюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DelOrdTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.DelDishTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.DelRestTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.DelCustTCMI = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdateTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test_but = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,7 +134,6 @@
             this.AddTSMenuItem,
             this.EditTSMenuItem,
             this.DeleteTSMenuItem,
-            this.добавитьФильтрациюToolStripMenuItem,
             this.UpdateTSMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -218,9 +215,9 @@
             // 
             this.EditTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.EditOrdetTSMI,
-            this.блюдоToolStripMenuItem1,
-            this.ресторанToolStripMenuItem1,
-            this.заказчикToolStripMenuItem});
+            this.EditDishTSMI,
+            this.EditRestTSMI,
+            this.EditCustTSIM});
             this.EditTSMenuItem.Name = "EditTSMenuItem";
             this.EditTSMenuItem.Size = new System.Drawing.Size(146, 24);
             this.EditTSMenuItem.Text = "Редактировать БД";
@@ -232,64 +229,65 @@
             this.EditOrdetTSMI.Text = "Заказ";
             this.EditOrdetTSMI.Click += new System.EventHandler(this.EditOrdetTSMI_Click);
             // 
-            // блюдоToolStripMenuItem1
+            // EditDishTSMI
             // 
-            this.блюдоToolStripMenuItem1.Name = "блюдоToolStripMenuItem1";
-            this.блюдоToolStripMenuItem1.Size = new System.Drawing.Size(148, 26);
-            this.блюдоToolStripMenuItem1.Text = "Блюдо";
+            this.EditDishTSMI.Name = "EditDishTSMI";
+            this.EditDishTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditDishTSMI.Text = "Блюдо";
+            this.EditDishTSMI.Click += new System.EventHandler(this.EditDishTSMI_Click);
             // 
-            // ресторанToolStripMenuItem1
+            // EditRestTSMI
             // 
-            this.ресторанToolStripMenuItem1.Name = "ресторанToolStripMenuItem1";
-            this.ресторанToolStripMenuItem1.Size = new System.Drawing.Size(148, 26);
-            this.ресторанToolStripMenuItem1.Text = "Ресторан";
+            this.EditRestTSMI.Name = "EditRestTSMI";
+            this.EditRestTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditRestTSMI.Text = "Ресторан";
+            this.EditRestTSMI.Click += new System.EventHandler(this.EditRestTSMI_Click);
             // 
-            // заказчикToolStripMenuItem
+            // EditCustTSIM
             // 
-            this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
-            this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.заказчикToolStripMenuItem.Text = "Заказчик";
+            this.EditCustTSIM.Name = "EditCustTSIM";
+            this.EditCustTSIM.Size = new System.Drawing.Size(148, 26);
+            this.EditCustTSIM.Text = "Заказчик";
+            this.EditCustTSIM.Click += new System.EventHandler(this.EditCustTSIM_Click);
             // 
             // DeleteTSMenuItem
             // 
             this.DeleteTSMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.заказToolStripMenuItem2,
-            this.блюдоToolStripMenuItem2,
-            this.ресторанToolStripMenuItem2,
-            this.заказчикToolStripMenuItem1});
+            this.DelOrdTSMI,
+            this.DelDishTSMI,
+            this.DelRestTSMI,
+            this.DelCustTCMI});
             this.DeleteTSMenuItem.Name = "DeleteTSMenuItem";
             this.DeleteTSMenuItem.Size = new System.Drawing.Size(120, 24);
             this.DeleteTSMenuItem.Text = "Удалить из БД";
             // 
-            // заказToolStripMenuItem2
+            // DelOrdTSMI
             // 
-            this.заказToolStripMenuItem2.Name = "заказToolStripMenuItem2";
-            this.заказToolStripMenuItem2.Size = new System.Drawing.Size(148, 26);
-            this.заказToolStripMenuItem2.Text = "Заказ";
+            this.DelOrdTSMI.Name = "DelOrdTSMI";
+            this.DelOrdTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelOrdTSMI.Text = "Заказ";
+            this.DelOrdTSMI.Click += new System.EventHandler(this.DelOrdTSMI_Click);
             // 
-            // блюдоToolStripMenuItem2
+            // DelDishTSMI
             // 
-            this.блюдоToolStripMenuItem2.Name = "блюдоToolStripMenuItem2";
-            this.блюдоToolStripMenuItem2.Size = new System.Drawing.Size(148, 26);
-            this.блюдоToolStripMenuItem2.Text = "Блюдо";
+            this.DelDishTSMI.Name = "DelDishTSMI";
+            this.DelDishTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelDishTSMI.Text = "Блюдо";
+            this.DelDishTSMI.Click += new System.EventHandler(this.DelDishTSMI_Click);
             // 
-            // ресторанToolStripMenuItem2
+            // DelRestTSMI
             // 
-            this.ресторанToolStripMenuItem2.Name = "ресторанToolStripMenuItem2";
-            this.ресторанToolStripMenuItem2.Size = new System.Drawing.Size(148, 26);
-            this.ресторанToolStripMenuItem2.Text = "Ресторан";
+            this.DelRestTSMI.Name = "DelRestTSMI";
+            this.DelRestTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelRestTSMI.Text = "Ресторан";
+            this.DelRestTSMI.Click += new System.EventHandler(this.DelRestTSMI_Click);
             // 
-            // заказчикToolStripMenuItem1
+            // DelCustTCMI
             // 
-            this.заказчикToolStripMenuItem1.Name = "заказчикToolStripMenuItem1";
-            this.заказчикToolStripMenuItem1.Size = new System.Drawing.Size(148, 26);
-            this.заказчикToolStripMenuItem1.Text = "Заказчик";
-            // 
-            // добавитьФильтрациюToolStripMenuItem
-            // 
-            this.добавитьФильтрациюToolStripMenuItem.Name = "добавитьФильтрациюToolStripMenuItem";
-            this.добавитьФильтрациюToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
-            this.добавитьФильтрациюToolStripMenuItem.Text = "Фильтрация...";
+            this.DelCustTCMI.Name = "DelCustTCMI";
+            this.DelCustTCMI.Size = new System.Drawing.Size(148, 26);
+            this.DelCustTCMI.Text = "Заказчик";
+            this.DelCustTCMI.Click += new System.EventHandler(this.DelCustTCMI_Click);
             // 
             // UpdateTSMenuItem
             // 
@@ -298,22 +296,11 @@
             this.UpdateTSMenuItem.Text = "Обновить...";
             this.UpdateTSMenuItem.Click += new System.EventHandler(this.UpdateTSMenuItem_Click);
             // 
-            // test_but
-            // 
-            this.test_but.Location = new System.Drawing.Point(13, 308);
-            this.test_but.Name = "test_but";
-            this.test_but.Size = new System.Drawing.Size(75, 23);
-            this.test_but.TabIndex = 10;
-            this.test_but.Text = "test";
-            this.test_but.UseVisualStyleBackColor = true;
-            this.test_but.Click += new System.EventHandler(this.test_but_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 367);
-            this.Controls.Add(this.test_but);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.menuStrip);
@@ -350,17 +337,15 @@
         private System.Windows.Forms.ToolStripMenuItem AddRestTSMItem;
         private System.Windows.Forms.ToolStripMenuItem AddCustTSMItem;
         private System.Windows.Forms.ToolStripMenuItem EditOrdetTSMI;
-        private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem заказToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem блюдоToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem ресторанToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem добавитьФильтрациюToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EditDishTSMI;
+        private System.Windows.Forms.ToolStripMenuItem EditRestTSMI;
+        private System.Windows.Forms.ToolStripMenuItem EditCustTSIM;
+        private System.Windows.Forms.ToolStripMenuItem DelOrdTSMI;
+        private System.Windows.Forms.ToolStripMenuItem DelDishTSMI;
+        private System.Windows.Forms.ToolStripMenuItem DelRestTSMI;
+        private System.Windows.Forms.ToolStripMenuItem DelCustTCMI;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ToolStripMenuItem UpdateTSMenuItem;
-        private System.Windows.Forms.Button test_but;
     }
 }
 

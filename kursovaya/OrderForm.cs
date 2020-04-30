@@ -231,105 +231,120 @@ namespace kursovaya
 
         private void AddOrderButton_Click(object sender, EventArgs e)
         {
-
-            Restaurant rest = new Restaurant();
-            Customer cust = new Customer();
-            List<Dish> new_dish_list = new List<Dish>();
-
-            foreach (Restaurant r in rests)
+            bool empty = false;
+            if (dateTimePicker.Text == "" || CustomerCB.Text == "" || RestCB.Text == "" || statusLB.Text == "")
             {
-                if (String.Equals((r.get_rest_id() + "  " + r.get_rest_name()), RestCB.Text))
+                empty = true;
+            }
+            for(int i=0; i< DishCB_list.Count; i++)
+            {
+                if(DishCB_list[i].Text ==""|| DishTB_list[i].Text == "")
                 {
-                    rest = r;
+                    empty = true;
+                    break;
                 }
             }
-            foreach (Customer c in custs)
+            if (!empty)
             {
-                if (String.Equals(c.get_cust_id_p().get_value() + "  " + c.get_cust_name().get_value(), CustomerCB.Text))
-                {
-                    cust = c;
-                }
-            }
+                Restaurant rest = new Restaurant();
+                Customer cust = new Customer();
+                List<Dish> new_dish_list = new List<Dish>();
 
-            for (int i = 0; i < DishCB_list.Count; i++)
-            {
-                foreach (Dish d in dishes)
+                foreach (Restaurant r in rests)
                 {
-                    if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()), DishCB_list[i].Text))
+                    if (String.Equals((r.get_rest_id() + "  " + r.get_rest_name()), RestCB.Text))
                     {
-                        Dish new_d = new Dish();
-                        new_d.get_nmb_field().set_value(DishTB_list[i].Text);
-                        new_d.get_name_field().set_value(d.get_name_field().get_value());
-                        new_d.get_cost_field().set_value(d.get_cost_field().get_value());
-                        new_d.get_dish_id_field().set_value(d.get_dish_id_field().get_value());
-
-                        new_dish_list.Add(new_d);
+                        rest = r;
                     }
                 }
-            }
-            if (String.Equals(mode, "add"))
-            {
-                mngr_contr.Add_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list);
-            }
-            if (String.Equals(mode, "edit"))
-            {
-                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
-                OrdersInfoContr ord_contr2 = new OrdersInfoContr(mngr_contr.Create_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list));
-                if (!ord_contr.Check_status_date_equal(ord_contr2.Get_order()))
+                foreach (Customer c in custs)
                 {
-                    if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
+                    if (String.Equals(c.get_cust_id_p().get_value() + "  " + c.get_cust_name().get_value(), CustomerCB.Text))
                     {
-                        Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
-                        ord_contr.Edit_ord_field(ord_contr2.Get_order().get_status());
-                    }
-                    if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
-                    {
-                        Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
-                        ord_contr.Edit_ord_field(ord_contr2.Get_order().get_event_date());
-                    }
-                }
-                foreach(Dish d in ord_contr.Get_order().get_dishes_list())
-                {
-                    if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
-                    {
-                        Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
-                        ord_contr.DelDish_from_order(d);
+                        cust = c;
                     }
                 }
 
-                foreach(Dish d in ord_contr2.Get_order().get_dishes_list())
+                for (int i = 0; i < DishCB_list.Count; i++)
                 {
-                    if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
+                    foreach (Dish d in dishes)
                     {
-                        Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
-                        ord_contr.Add_dish_to_order(d);
+                        if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()), DishCB_list[i].Text))
+                        {
+                            Dish new_d = new Dish();
+                            new_d.get_nmb_field().set_value(DishTB_list[i].Text);
+                            new_d.get_name_field().set_value(d.get_name_field().get_value());
+                            new_d.get_cost_field().set_value(d.get_cost_field().get_value());
+                            new_d.get_dish_id_field().set_value(d.get_dish_id_field().get_value());
+
+                            new_dish_list.Add(new_d);
+                        }
+                    }
+                }
+                if (String.Equals(mode, "add"))
+                {
+                    mngr_contr.Add_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list);
+                }
+                if (String.Equals(mode, "edit"))
+                {
+                    ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                    OrdersInfoContr ord_contr2 = new OrdersInfoContr(mngr_contr.Create_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list));
+                    if (!ord_contr.Check_status_date_equal(ord_contr2.Get_order()))
+                    {
+                        if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
+                        {
+                            Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
+                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_status());
+                        }
+                        if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
+                        {
+                            Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
+                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_event_date());
+                        }
+                    }
+                    foreach (Dish d in ord_contr.Get_order().get_dishes_list())
+                    {
+                        if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
+                        {
+                            Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
+                            ord_contr.DelDish_from_order(d);
+                        }
+                    }
+
+                    foreach (Dish d in ord_contr2.Get_order().get_dishes_list())
+                    {
+                        if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
+                        {
+                            Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
+                            ord_contr.Add_dish_to_order(d);
+                        }
+                    }
+
+                    foreach (Dish d2 in ord_contr2.Get_order().get_dishes_list())
+                    {
+                        foreach (Dish d in ord_contr.Get_order().get_dishes_list())
+                        {
+                            if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()) && !String.Equals(d.get_nmb_field().get_value(), d2.get_nmb_field().get_value()))
+                                Console.WriteLine("Chande col of dish " + d.get_dish_id_field().get_value() + " from " + d.get_nmb_field().get_value() + " to " + d2.get_nmb_field().get_value());
+                        }
+                    }
+
+                    if (!ord_contr.Check_exist_rest(ord_contr2.Get_rest().get_rest_id()))
+                    {
+                        Console.WriteLine("Change rest to " + ord_contr2.Get_rest().get_rest_id());
+                    }
+
+                    if (!ord_contr.Check_exist_cust(ord_contr2.Get_cust().get_cust_id_p().get_value()))
+                    {
+                        Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
                     }
                 }
 
-                foreach (Dish d2 in ord_contr2.Get_order().get_dishes_list())
+                if (String.Equals(mode, "delete"))
                 {
-                    foreach(Dish d in ord_contr.Get_order().get_dishes_list())
-                    {
-                        if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()) && !String.Equals(d.get_nmb_field().get_value(), d2.get_nmb_field().get_value()))
-                            Console.WriteLine("Chande col of dish " + d.get_dish_id_field().get_value() + " from " + d.get_nmb_field().get_value() + " to " + d2.get_nmb_field().get_value());
-                    }
+                    ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                    ord_contr.Delete_order();
                 }
-
-                if(!ord_contr.Check_exist_rest(ord_contr2.Get_rest().get_rest_id()))
-                {
-                    Console.WriteLine("Change rest to " + ord_contr2.Get_rest().get_rest_id());
-                }
-
-                if(!ord_contr.Check_exist_cust(ord_contr2.Get_cust().get_cust_id_p().get_value()))
-                {
-                    Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
-                }
-            }
-
-            if(String.Equals(mode, "delete"))
-            {
-                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
-                ord_contr.Delete_order();
             }
         }
 

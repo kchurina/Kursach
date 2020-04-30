@@ -188,6 +188,7 @@ namespace kursovaya
                     foreach (DbDataRecord Pr in Price_data_reader)
                     {
                         price += Convert.ToInt32(Pr["oredered_dish_price"]);
+                        Console.WriteLine(price);
                     }
                     Price_data_reader.Close();
                     ord.get_fin_cost().set_value(price.ToString());
@@ -389,6 +390,19 @@ namespace kursovaya
             commadn0.ExecuteScalar();
             NpgsqlCommand commadn1 = new NpgsqlCommand("DELETE FROM oorder WHERE order_id_p=" + Convert.ToInt32(id), npgSqlConnection);
             commadn1.ExecuteScalar();
+
+            npgSqlConnection.Close();
+        }
+
+        public void Update_ordered(string order_id, Dish dish)
+        {
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            npgSqlConnection.Open();
+
+            int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
+            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE ordered SET oredered_dish_price="+price+" WHERE order_id_p=" + Convert.ToInt32(order_id)+" AND dish_id_p="+dish.get_dish_id_field().get_value(), npgSqlConnection);
+            Console.WriteLine(order_id + "!!  " + price.ToString());
+            commadn.ExecuteScalar();
 
             npgSqlConnection.Close();
         }

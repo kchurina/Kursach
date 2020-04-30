@@ -115,8 +115,17 @@ namespace kursovaya
                     OrdersInfoContr ord_contr = new OrdersInfoContr(ord);
                     ord_contr.Delete_order();
                 }
-                if (String.Equals(ord.get_status().get_value(), "В процессе уточнения"))
+                if (String.Equals(ord.get_status().get_value(), "В процессе"))
+                {
                     ord.RecountFPrice();
+                    foreach (Dish dish in ord.get_dishes_list())
+                    {
+                        Console.WriteLine("$$");
+                        DishInfoContr dc = new DishInfoContr(dish);
+                        dc.Update_ordered(ord.get_ord_name().get_value());
+                    }
+
+                }
                 ord.CountDishCol();
             }
             mngr_contr.Set_orders_list();
@@ -131,7 +140,7 @@ namespace kursovaya
 
         private void AddDishTSMItem_Click(object sender, EventArgs e)
         {
-            DishForm add_dish_f = new DishForm("add");
+            DishForm add_dish_f = new DishForm("add", mngr_contr);
             add_dish_f.Show();
         }
 
@@ -179,13 +188,13 @@ namespace kursovaya
 
         private void EditDishTSMI_Click(object sender, EventArgs e)
         {
-            DishForm dish_f = new DishForm("edit");
+            DishForm dish_f = new DishForm("edit", mngr_contr);            
             dish_f.Show();
         }
 
         private void DelDishTSMI_Click(object sender, EventArgs e)
         {
-            DishForm dish_f = new DishForm("delete");
+            DishForm dish_f = new DishForm("delete", mngr_contr);
             dish_f.Show();
         }
 

@@ -236,9 +236,9 @@ namespace kursovaya
             {
                 empty = true;
             }
-            for(int i=0; i< DishCB_list.Count; i++)
+            for (int i = 0; i < DishCB_list.Count; i++)
             {
-                if(DishCB_list[i].Text ==""|| DishTB_list[i].Text == "")
+                if (DishCB_list[i].Text == "" || DishTB_list[i].Text == "")
                 {
                     empty = true;
                     break;
@@ -339,13 +339,14 @@ namespace kursovaya
                         Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
                     }
                 }
-
-                if (String.Equals(mode, "delete"))
-                {
-                    ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
-                    ord_contr.Delete_order();
-                }
             }
+
+            if (String.Equals(mode, "delete"))
+            {
+                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                ord_contr.Delete_order();
+            }
+
         }
 
         private void countButton_Click(object sender, EventArgs e)

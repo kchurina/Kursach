@@ -40,6 +40,7 @@ namespace kursovaya
             foreach (Dish dish in dishes)
             {
                 price += Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
+
             }
 
             ord_fields[3].set_value(price.ToString());

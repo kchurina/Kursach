@@ -77,79 +77,79 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustForm.cs">
+    <Compile Include="Forms\CustForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustForm.Designer.cs">
+    <Compile Include="Forms\CustForm.Designer.cs">
       <DependentUpon>CustForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DishForm.cs">
+    <Compile Include="Forms\DishForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DishForm.Designer.cs">
+    <Compile Include="Forms\DishForm.Designer.cs">
       <DependentUpon>DishForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RestForm.cs">
+    <Compile Include="Forms\RestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RestForm.Designer.cs">
+    <Compile Include="Forms\RestForm.Designer.cs">
       <DependentUpon>RestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustInfoContr.cs" />
-    <Compile Include="DishInfoContr.cs" />
-    <Compile Include="OrderForm.cs">
+    <Compile Include="Controllers\CustInfoContr.cs" />
+    <Compile Include="Controllers\DishInfoContr.cs" />
+    <Compile Include="Forms\OrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OrderForm.Designer.cs">
+    <Compile Include="Forms\OrderForm.Designer.cs">
       <DependentUpon>OrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Customer.cs" />
-    <Compile Include="Dish.cs" />
-    <Compile Include="Dish_fields.cs" />
-    <Compile Include="RestInfoContr.cs" />
-    <Compile Include="ShowDBListForm.cs">
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Dish.cs" />
+    <Compile Include="Entitie%27s fields\Dish_fields.cs" />
+    <Compile Include="Controllers\RestInfoContr.cs" />
+    <Compile Include="Forms\ShowDBListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShowDBListForm.Designer.cs">
+    <Compile Include="Forms\ShowDBListForm.Designer.cs">
       <DependentUpon>ShowDBListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrdersInfoContr.cs" />
-    <Compile Include="OrdersInfoForm.cs">
+    <Compile Include="Controllers\OrdersInfoContr.cs" />
+    <Compile Include="Forms\OrdersInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OrdersInfoForm.Designer.cs">
+    <Compile Include="Forms\OrdersInfoForm.Designer.cs">
       <DependentUpon>OrdersInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrderMngrContr.cs" />
-    <Compile Include="OrdersManager.cs" />
-    <Compile Include="Order_data.cs" />
-    <Compile Include="Order_fields.cs" />
+    <Compile Include="Controllers\OrderMngrContr.cs" />
+    <Compile Include="Manager\OrdersManager.cs" />
+    <Compile Include="Entities\Order_data.cs" />
+    <Compile Include="Entitie%27s fields\Order_fields.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestAndDishesForm.cs">
+    <Compile Include="Forms\RestAndDishesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RestAndDishesForm.Designer.cs">
+    <Compile Include="Forms\RestAndDishesForm.Designer.cs">
       <DependentUpon>RestAndDishesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Restaurant.cs" />
-    <Compile Include="DBContr.cs" />
-    <EmbeddedResource Include="CustForm.resx">
+    <Compile Include="Entities\Restaurant.cs" />
+    <Compile Include="Controllers\DBContr.cs" />
+    <EmbeddedResource Include="Forms\CustForm.resx">
       <DependentUpon>CustForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DishForm.resx">
+    <EmbeddedResource Include="Forms\DishForm.resx">
       <DependentUpon>DishForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RestForm.resx">
+    <EmbeddedResource Include="Forms\RestForm.resx">
       <DependentUpon>RestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderForm.resx">
+    <EmbeddedResource Include="Forms\OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShowDBListForm.resx">
+    <EmbeddedResource Include="Forms\ShowDBListForm.resx">
       <DependentUpon>ShowDBListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrdersInfoForm.resx">
+    <EmbeddedResource Include="Forms\OrdersInfoForm.resx">
       <DependentUpon>OrdersInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -161,7 +161,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RestAndDishesForm.resx">
+    <EmbeddedResource Include="Forms\RestAndDishesForm.resx">
       <DependentUpon>RestAndDishesForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

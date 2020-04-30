@@ -14,13 +14,15 @@ namespace kursovaya
     {
         DishInfoContr dish_contr;
         DishInfoContr dish_contr2;
+        OrderMngrContr mngr_contr;
         string mode;
 
 
-        public DishForm(string new_mode)
+        public DishForm(string new_mode, OrderMngrContr new_mngr_contr)
         {
             dish_contr = new DishInfoContr();
             mode = new_mode;
+            mngr_contr = new_mngr_contr;
 
             InitializeComponent();
             if (String.Equals(mode, "add"))

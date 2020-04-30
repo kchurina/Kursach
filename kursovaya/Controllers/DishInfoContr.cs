@@ -66,5 +66,10 @@ namespace kursovaya
             db_contr.Delete_dish(dish.get_dish_id_field().get_value());
         }
 
+        public void Update_ordered(string order_id)
+        {
+            db_contr.Update_ordered(order_id, dish);
+        }
+
     }
 }

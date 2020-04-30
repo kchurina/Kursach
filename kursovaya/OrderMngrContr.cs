@@ -140,5 +140,15 @@ namespace kursovaya
                 }
             }
         }
+
+        public List<Order_data> Get_orders_from_db()
+        {
+            return db_contr.Load_from_db();
+        }
+
+        public void Set_orders_list()
+        {
+            ord_mngr.set_orders_list(db_contr.Load_from_db());
+        }
     }
 }

@@ -15,16 +15,12 @@ namespace kursovaya
         private OrdersManager ord_mngr;
         private List<Order_data> orders;
         private OrderMngrContr mngr_contr;
-        private DBContr db_contr;
 
         public MainForm()
         {
-            db_contr = new DBContr();
-            orders = db_contr.Load_from_db();
             ord_mngr = new OrdersManager();
-
-            ord_mngr.set_orders_list(orders);
             mngr_contr = new OrderMngrContr(ord_mngr);
+            mngr_contr.Set_orders_list();
 
             InitializeComponent();
         }
@@ -108,7 +104,9 @@ namespace kursovaya
                 listView1.Items.Clear();
             }
 
-            ord_mngr.set_orders_list(db_contr.Load_from_db());
+            mngr_contr = new OrderMngrContr();
+            mngr_contr.Set_orders_list();
+            ord_mngr = mngr_contr.Get_mngr();
 
             foreach (Order_data ord in ord_mngr.get_orders_list())
             {
@@ -121,6 +119,7 @@ namespace kursovaya
                     ord.RecountFPrice();
                 ord.CountDishCol();
             }
+            mngr_contr.Set_orders_list();
             Display();
         }
 

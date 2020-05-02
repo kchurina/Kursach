@@ -21,13 +21,13 @@ namespace kursovaya
 
     public class Rest_id_f : Order_fields
     {
-        public Rest_id_f () { name_field = "rest_id_f: "; field_type = "int"; }
+        public Rest_id_f () { name_field = "rest_id_f: "; field_type = "int"; db_name = "rest_id_f"; }
 
     }
 
     public class Cust_id_f: Order_fields
     {
-        public Cust_id_f () { name_field = "cust_id_p: "; field_type = "int"; db_name = "cust_id_p"; }
+        public Cust_id_f () { name_field = "cust_id_f: "; field_type = "int"; db_name = "cust_id_f"; }
     }
 
     public class OrdName_field : Order_fields

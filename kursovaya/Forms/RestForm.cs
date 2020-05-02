@@ -42,13 +42,24 @@ namespace kursovaya
                     }
                     else
                         MessageBox.Show("Ресторан с таким названием уже существует!");
+
+                    this.Close();
                 }
 
                 if (String.Equals(mode, "edit"))
                 {
-                    if(!String.Equals(textBox1.Text, rest_contr2.Get_rest().get_rest_name()))
+                    try
                     {
-                        rest_contr2.Edit_rest(textBox1.Text);
+                        if (!String.Equals(textBox1.Text, rest_contr2.Get_rest().get_rest_name()))
+                        {
+                            rest_contr2.Edit_rest(textBox1.Text);
+                            this.Close();
+                        }
+                    }
+                    catch(NullReferenceException)
+                    {
+                        MessageBox.Show("Выберите ресторан!");
+                        return;
                     }
 
                 }
@@ -56,6 +67,7 @@ namespace kursovaya
                 if (String.Equals(mode, "delete"))
                 {
                     rest_contr2.Delete_rest();
+                    this.Close();
                 }
 
             }

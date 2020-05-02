@@ -50,5 +50,15 @@ namespace kursovaya
         {
             db_contr.Delete_cust(customer.get_cust_id_p().get_value());
         }
+
+        public bool CheckExistCust(string id)
+        {
+            foreach(Customer c in cust_list)
+            {
+                if (String.Equals(id, c.get_cust_id_p().get_value()))
+                    return true;
+            }
+            return false;
+        }
     }
 }

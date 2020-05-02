@@ -27,11 +27,18 @@ namespace kursovaya
 
             foreach(Dish dish in order.get_dishes_list())
             {
-                int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
-                NpgsqlCommand ordr_commadn = new NpgsqlCommand("INSERT INTO ordered(order_id_p, dish_id_p, oredered_dish_price, num)" +"VALUES ("+ord_id+", "+Convert.ToInt32(dish.get_dish_id_field().get_value())+", "+price+"::money, "+ Convert.ToInt32(dish.get_nmb_field().get_value()) + ")", npgSqlConnection);
-                ordr_commadn.ExecuteScalar();
+                /*try
+                {*/
+                    int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
+                    NpgsqlCommand ordr_commadn = new NpgsqlCommand("INSERT INTO ordered(order_id_p, dish_id_p, oredered_dish_price, num)" + "VALUES (" + ord_id + ", " + Convert.ToInt32(dish.get_dish_id_field().get_value()) + ", " + price + "::money, " + Convert.ToInt32(dish.get_nmb_field().get_value()) + ")", npgSqlConnection);
+                    ordr_commadn.ExecuteScalar();
+               /*}
+                catch (System.FormatException)
+                {
+                    System.Windows.Forms.MessageBox.Show("В числовом поле должно быть число!");
+                }*/
+;
             }
-
             npgSqlConnection.Close();
             return ord_id;
         }
@@ -64,6 +71,7 @@ namespace kursovaya
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
+            Console.WriteLine(ord_id + "  " + dish_col + " " + ordered_price);
             NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO ordered VALUES (" + ord_id + ", " + dish_id + ", "+ordered_price+", "+dish_col+")", npgSqlConnection);
             add_commadn.ExecuteScalar();
 
@@ -75,22 +83,33 @@ namespace kursovaya
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
+            Console.WriteLine(ord_id + "  " + dish_id);
             NpgsqlCommand add_commadn = new NpgsqlCommand("DELETE FROM ordered WHERE order_id_p="+ord_id+" AND dish_id_p="+dish_id+"", npgSqlConnection);
             add_commadn.ExecuteScalar();
 
             npgSqlConnection.Close();
         }
 
-        public string AddDish(Dish dish)
+        public bool AddDish(Dish dish)
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
-            NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO dish(dish_name, price) VALUES ('"+dish.get_name_field().get_value()+"', "+Convert.ToInt32(dish.get_cost_field().get_value())+") RETURNING dish_id_p", npgSqlConnection);
-            string id = add_commadn.ExecuteScalar().ToString();
+            try
+            {
+                NpgsqlCommand add_commadn = new NpgsqlCommand("INSERT INTO dish(dish_name, price) VALUES ('" + dish.get_name_field().get_value() + "', " + Convert.ToInt32(dish.get_cost_field().get_value()) + ") RETURNING dish_id_p", npgSqlConnection);
+                string id = add_commadn.ExecuteScalar().ToString();
+                npgSqlConnection.Close();
+                return false;
+            }
+            catch (FormatException)
+            {
+                System.Windows.Forms.MessageBox.Show("В числовом поле должно быть число!");
+                npgSqlConnection.Close();
+                return true;
+            }            
             
-            npgSqlConnection.Close();
-            return id;
+            
         }
 
         public List<Order_data> Load_from_db()
@@ -275,9 +294,18 @@ namespace kursovaya
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
-            NpgsqlCommand ord_commadn = new NpgsqlCommand("UPDATE oorder SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE order_id_p=" +  Convert.ToInt32(id), npgSqlConnection);
-            ord_commadn.ExecuteScalar();
+            Console.WriteLine("@@" + id + " " + field.get_value());
 
+            if (field.get_type() == "string")
+            {
+                NpgsqlCommand ord_commadn = new NpgsqlCommand("UPDATE oorder SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE order_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+                ord_commadn.ExecuteScalar();
+            }
+            if (field.get_type() == "int")
+            {
+                NpgsqlCommand ord_commadn = new NpgsqlCommand("UPDATE oorder SET " + field.get_db_name() + "=" + Convert.ToUInt32(field.get_value()) + " WHERE order_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+                ord_commadn.ExecuteScalar();
+            }
             npgSqlConnection.Close();
         }
 
@@ -303,15 +331,24 @@ namespace kursovaya
             npgSqlConnection.Close();
         }
 
-        public void Edit_dish_field(Dish_fields field, string id)
+        public bool Edit_dish_field(Dish_fields field, string id)
         {
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
             npgSqlConnection.Open();
 
-            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE dish SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE dish_id_p=" + Convert.ToInt32(id), npgSqlConnection);
-            commadn.ExecuteScalar();
-
-            npgSqlConnection.Close();
+            try
+            {
+                NpgsqlCommand commadn = new NpgsqlCommand("UPDATE dish SET " + field.get_db_name() + "='" + field.get_value() + "' WHERE dish_id_p=" + Convert.ToInt32(id), npgSqlConnection);
+                commadn.ExecuteScalar();
+                npgSqlConnection.Close();
+                return false;
+            }
+            catch (Npgsql.PostgresException)
+            {
+                System.Windows.Forms.MessageBox.Show("В числовом поле должно быть число!");
+                npgSqlConnection.Close();
+                return true;
+            }
         }
 
         public void Delete_cust(string id)
@@ -400,9 +437,12 @@ namespace kursovaya
             npgSqlConnection.Open();
 
             int price = Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
-            NpgsqlCommand commadn = new NpgsqlCommand("UPDATE ordered SET oredered_dish_price="+price+" WHERE order_id_p=" + Convert.ToInt32(order_id)+" AND dish_id_p="+dish.get_dish_id_field().get_value(), npgSqlConnection);
-            Console.WriteLine(order_id + "!!  " + price.ToString());
-            commadn.ExecuteScalar();
+            NpgsqlCommand commadn0 = new NpgsqlCommand("UPDATE ordered SET oredered_dish_price="+price+" WHERE order_id_p=" + Convert.ToInt32(order_id)+" AND dish_id_p="+dish.get_dish_id_field().get_value(), npgSqlConnection);
+            Console.WriteLine(order_id + "!!  " + price.ToString() + "col" + dish.get_nmb_field().get_value());
+            commadn0.ExecuteScalar();
+
+            NpgsqlCommand commadn1 = new NpgsqlCommand("UPDATE ordered SET num=" + dish.get_nmb_field().get_value() + " WHERE order_id_p=" + Convert.ToInt32(order_id) + " AND dish_id_p=" + dish.get_dish_id_field().get_value(), npgSqlConnection);
+            commadn1.ExecuteScalar();
 
             npgSqlConnection.Close();
         }

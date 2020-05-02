@@ -149,6 +149,7 @@
             this.statusLB.Name = "statusLB";
             this.statusLB.Size = new System.Drawing.Size(103, 36);
             this.statusLB.TabIndex = 14;
+            this.statusLB.SelectedIndexChanged += new System.EventHandler(this.statusLB_SelectedIndexChanged);
             // 
             // label7
             // 

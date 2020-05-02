@@ -57,10 +57,12 @@ namespace kursovaya
             {
                 if (String.Equals(mode, "add"))
                 {
+                    bool error = false;
+
                     if (!dish_contr.CheckExistDish(name_box.Text))
                     {
-                        dish_contr.Add_dish(name_box.Text, "0", cost_box.Text);
-                        this.Close();
+                        error = dish_contr.Add_dish(name_box.Text, "0", cost_box.Text);
+                        if (!error) this.Close();
                     }
                     else
                     {
@@ -70,24 +72,47 @@ namespace kursovaya
 
                 if (String.Equals(mode, "edit"))
                 {
-                    if (!String.Equals(name_box.Text, dish_contr2.Get_dish().get_name_field().get_value()))
+                    try
                     {
-                        dish_contr2.Get_dish().get_name_field().set_value(name_box.Text);
-                        dish_contr2.Edit_dish(dish_contr2.Get_dish().get_name_field());
-                        Console.WriteLine("Edited dish name to " + dish_contr2.Get_dish().get_name_field().get_value());
-                    }
-                    if (!String.Equals(cost_box.Text, dish_contr2.Get_dish().get_cost_field().get_value()))
-                    {
-                        dish_contr2.Get_dish().get_cost_field().set_value(cost_box.Text);
-                        dish_contr2.Edit_dish(dish_contr2.Get_dish().get_cost_field());
-                        Console.WriteLine("Edited dish cost to " + dish_contr2.Get_dish().get_cost_field().get_value());
-                    }
+                        bool error = false;
 
+                        if (!String.Equals(name_box.Text, dish_contr2.Get_dish().get_name_field().get_value()))
+                        {
+                            dish_contr2.Get_dish().get_name_field().set_value(name_box.Text);
+                            dish_contr2.Edit_dish(dish_contr2.Get_dish().get_name_field());
+                            Console.WriteLine("Edited dish name to " + dish_contr2.Get_dish().get_name_field().get_value());
+                        }
+                        if (!String.Equals(cost_box.Text, dish_contr2.Get_dish().get_cost_field().get_value()))
+                        {
+                            dish_contr2.Get_dish().get_cost_field().set_value(cost_box.Text);
+                            error = dish_contr2.Edit_dish(dish_contr2.Get_dish().get_cost_field());
+                            Console.WriteLine("Edited dish cost to " + dish_contr2.Get_dish().get_cost_field().get_value());
+                        }
+
+                        if (!error)
+                        {
+                            this.Close();
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("Выберите блюдо!");
+                        return;
+                    }
                 }
             }
             if (String.Equals(mode, "delete"))
             {
-                dish_contr2.Delete_dish();
+                try
+                {
+                    dish_contr2.Delete_dish();
+                    this.Close();
+                }
+                catch(NullReferenceException)
+                {
+                    MessageBox.Show("Выберите блюдо!");
+                    return;
+                }
             }
 
         }

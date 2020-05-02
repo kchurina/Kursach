@@ -30,6 +30,7 @@ namespace kursovaya
             ord_fields.Add(new FinCost_field());
             ord_fields.Add(new DishCol_field());
             ord_fields.Add(new Rest_id_f());
+            ord_fields.Add(new Cust_id_f());
         }
 
 
@@ -40,9 +41,7 @@ namespace kursovaya
             foreach (Dish dish in dishes)
             {
                 price += Convert.ToInt32(dish.get_nmb_field().get_value()) * Convert.ToInt32(dish.get_cost_field().get_value());
-
             }
-
             ord_fields[3].set_value(price.ToString());
         }
 
@@ -108,6 +107,11 @@ namespace kursovaya
         public Order_fields get_rest_id_f()
         {
             return ord_fields[5];
+        }
+
+        public Order_fields get_cust_id_f()
+        {
+            return ord_fields[6];
         }
 
         public List<Order_fields> get_fields_list()

@@ -41,28 +41,46 @@ namespace kursovaya
                     cust.get_cust_tel().set_value(TelTB.Text);
 
                     cust_contr.Add_cust(cust);
+                    this.Close();
                 }
 
                 if (String.Equals(mode, "edit"))
                 {
-                    if (!String.Equals(CustTB.Text, cust_contr2.Get_cust().get_cust_name().get_value()))
+                    try
                     {
-                        cust_contr2.Get_cust().get_cust_name().set_value(CustTB.Text);
-                        cust_contr2.Edit_cust(cust_contr2.Get_cust().get_cust_name());
-                        Console.WriteLine("Edited cust name to " + cust_contr2.Get_cust().get_cust_name().get_value());
+                        if (!String.Equals(CustTB.Text, cust_contr2.Get_cust().get_cust_name().get_value()))
+                        {
+                            cust_contr2.Get_cust().get_cust_name().set_value(CustTB.Text);
+                            cust_contr2.Edit_cust(cust_contr2.Get_cust().get_cust_name());
+                            Console.WriteLine("Edited cust name to " + cust_contr2.Get_cust().get_cust_name().get_value());
+                        }
+                        if (!String.Equals(TelTB.Text, cust_contr2.Get_cust().get_cust_tel().get_value()))
+                        {
+                            cust_contr2.Get_cust().get_cust_tel().set_value(TelTB.Text);
+                            cust_contr2.Edit_cust(cust_contr2.Get_cust().get_cust_tel());
+                            Console.WriteLine("Edited cust tel to " + cust_contr2.Get_cust().get_cust_tel().get_value());
+                        }
+                        this.Close();
                     }
-                    if (!String.Equals(TelTB.Text, cust_contr2.Get_cust().get_cust_tel().get_value()))
+                    catch (NullReferenceException)
                     {
-                        cust_contr2.Get_cust().get_cust_tel().set_value(TelTB.Text);
-                        cust_contr2.Edit_cust(cust_contr2.Get_cust().get_cust_tel());
-                        Console.WriteLine("Edited cust tel to " + cust_contr2.Get_cust().get_cust_tel().get_value());
+                        MessageBox.Show("Выберите заказчика!");
+                        return;
                     }
-
                 }
             }
             if (String.Equals(mode, "delete"))
             {
+                try
+                { 
                 cust_contr2.Delete_cust();
+                this.Close();
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("Выберите заказчика!");
+                    return;
+                }
             }
         }
 

@@ -23,11 +23,11 @@ namespace kursovaya
             dishes = db_contr.Get_db_dishes();
         }
 
-        public bool CheckExistDish(string name)
+        public bool CheckExistDish(string id)
         {
             foreach (Dish d in dishes)
             {
-                if (String.Equals(name, d.get_name_field().get_value()))
+                if (String.Equals(id, d.get_dish_id_field().get_value()))
                 {
                     return true;
                 }
@@ -45,7 +45,7 @@ namespace kursovaya
             return dish;
         }
 
-        public void Add_dish(string name, string nmb, string cost)
+        public bool Add_dish(string name, string nmb, string cost)
         {
             Dish dish = new Dish();
 
@@ -53,12 +53,12 @@ namespace kursovaya
             dish.get_nmb_field().set_value(nmb);
             dish.get_cost_field().set_value(cost);
 
-            db_contr.AddDish(dish);
+            return db_contr.AddDish(dish);
         }
 
-        public void Edit_dish(Dish_fields field)
+        public bool Edit_dish(Dish_fields field)
         {
-            db_contr.Edit_dish_field(field, dish.get_dish_id_field().get_value());
+            return db_contr.Edit_dish_field(field, dish.get_dish_id_field().get_value());
         }
 
         public void Delete_dish()

@@ -204,20 +204,38 @@ namespace kursovaya
                 return;
             }
             string index = DelTextBox.Text;
-            int i = Convert.ToInt32(index);
+            int i;
+            try
+            {
+                i = Convert.ToInt32(index);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("В числовом поле должно быть число!");
+                return;
+            }
 
-            this.Controls.Remove(DishCB_list[i]);
-            this.Controls.Remove(DishTB_list[i]);
-            this.Controls.Remove(dish_name_list[i]);
-            this.Controls.Remove(dish_col_list[i]);
-            this.Controls.Remove(num_list[i]);
+            try
+            {
+                this.Controls.Remove(DishCB_list[i]);
+                this.Controls.Remove(DishTB_list[i]);
+                this.Controls.Remove(dish_name_list[i]);
+                this.Controls.Remove(dish_col_list[i]);
+                this.Controls.Remove(num_list[i]);
 
-            DishCB_list.RemoveAt(i);
-            dish_name_list.RemoveAt(i);
-            DishTB_list.RemoveAt(i);
-            dish_col_list.RemoveAt(i);
-            num_list.RemoveAt(i);
+                DishCB_list.RemoveAt(i);
+                dish_name_list.RemoveAt(i);
+                DishTB_list.RemoveAt(i);
+                dish_col_list.RemoveAt(i);
+                num_list.RemoveAt(i);
 
+            }
+
+            catch(ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Позиции с номером "+ i + " нет в списке!");
+                return;
+            }
             for(int j = 0; j<DishCB_list.Count; j++)
             {
                 dish_name_list[j].Location = new System.Drawing.Point(163, label8.Location.Y + 70 * j);
@@ -257,6 +275,14 @@ namespace kursovaya
                         rest = r;
                     }
                 }
+
+                RestInfoContr rest_contr = new RestInfoContr();
+                if (!rest_contr.CheckExistRest(rest.get_rest_name()))
+                {
+                    MessageBox.Show("Выберите ресторан!");
+                    return;
+                }
+
                 foreach (Customer c in custs)
                 {
                     if (String.Equals(c.get_cust_id_p().get_value() + "  " + c.get_cust_name().get_value(), CustomerCB.Text))
@@ -264,12 +290,18 @@ namespace kursovaya
                         cust = c;
                     }
                 }
+                CustInfoContr cust_contr = new CustInfoContr();
+                if (!cust_contr.CheckExistCust(cust.get_cust_id_p().get_value()))
+                {
+                    MessageBox.Show("Выберите заказчика!");
+                    return;
+                }
 
                 for (int i = 0; i < DishCB_list.Count; i++)
                 {
                     foreach (Dish d in dishes)
                     {
-                        if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()), DishCB_list[i].Text))
+                        if (String.Equals((d.get_dish_id_field().get_value() + "  " + d.get_name_field().get_value()), DishCB_list[i].Text)&& DishTB_list[i].Text!="0")
                         {
                             Dish new_d = new Dish();
                             new_d.get_nmb_field().set_value(DishTB_list[i].Text);
@@ -279,72 +311,153 @@ namespace kursovaya
 
                             new_dish_list.Add(new_d);
                         }
+
                     }
                 }
                 if (String.Equals(mode, "add"))
                 {
-                    mngr_contr.Add_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list);
+                    try
+                    {
+
+                        foreach (Dish d in new_dish_list)
+                        {
+                            int num = 0;
+                            foreach (Dish d2 in new_dish_list)
+                            {
+                                if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()))
+                                {
+                                    num++;
+                                }
+                            }
+                            //если повторяется больше одного раза (первый раз мы находим ровно то же блюдо, 
+                            //которое проверяем), то это другое такое же блюдо
+                            if (num > 1)
+                            {
+                                MessageBox.Show("Блюда не должны дублироваться!");
+                                return;
+                            }
+                        }
+                        mngr_contr.Add_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list);
+                        MessageBox.Show("Заказ был добавлен в базу данных!");
+                        this.Close();
+                    }
+                    catch(Npgsql.PostgresException)
+                    {
+                        MessageBox.Show("В числовом поле должно быть число!");
+                        return;
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("В числовом поле должно быть число!");
+                        return;
+                    }
+
                 }
+
                 if (String.Equals(mode, "edit"))
                 {
-                    ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
-                    OrdersInfoContr ord_contr2 = new OrdersInfoContr(mngr_contr.Create_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list));
-                    if (!ord_contr.Check_status_date_equal(ord_contr2.Get_order()))
+                    try
                     {
-                        if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
+                        ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                        OrdersInfoContr ord_contr2 = new OrdersInfoContr(mngr_contr.Create_new_order("0", "0", dateTimePicker.Value.ToLongDateString(), costTB.Text, statusLB.Text, rest, cust, new_dish_list));
+                        if (!ord_contr.Check_status_date_equal(ord_contr2.Get_order()))
                         {
-                            Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
-                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_status());
+                            if (!String.Equals(ord_contr.Get_order().get_status().get_value(), ord_contr2.Get_order().get_status().get_value()))
+                            {
+                                Console.WriteLine("Change order status to " + ord_contr2.Get_order().get_status().get_value());
+                                ord_contr.Edit_ord_field(ord_contr2.Get_order().get_status());
+                            }
+                            if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
+                            {
+                                Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
+                                ord_contr.Edit_ord_field(ord_contr2.Get_order().get_event_date());
+                            }
                         }
-                        if (!String.Equals(ord_contr.Get_order().get_event_date().get_value(), ord_contr2.Get_order().get_event_date().get_value()))
+                        foreach (Dish d in ord_contr2.Get_order().get_dishes_list())
                         {
-                            Console.WriteLine("Change order date to " + ord_contr2.Get_order().get_event_date().get_value());
-                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_event_date());
+                            if (ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
+                            {
+                                MessageBox.Show("Блюда не должны дублироваться!");
+                                return;
+                            }
                         }
-                    }
-                    foreach (Dish d in ord_contr.Get_order().get_dishes_list())
-                    {
-                        if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
-                        {
-                            Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
-                            ord_contr.DelDish_from_order(d);
-                        }
-                    }
-
-                    foreach (Dish d in ord_contr2.Get_order().get_dishes_list())
-                    {
-                        if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
-                        {
-                            Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
-                            ord_contr.Add_dish_to_order(d);
-                        }
-                    }
-
-                    foreach (Dish d2 in ord_contr2.Get_order().get_dishes_list())
-                    {
                         foreach (Dish d in ord_contr.Get_order().get_dishes_list())
                         {
-                            if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()) && !String.Equals(d.get_nmb_field().get_value(), d2.get_nmb_field().get_value()))
-                                Console.WriteLine("Chande col of dish " + d.get_dish_id_field().get_value() + " from " + d.get_nmb_field().get_value() + " to " + d2.get_nmb_field().get_value());
+                            if (!ord_contr2.Check_exist_dish(d.get_dish_id_field().get_value()))
+                            {
+                                Console.WriteLine("Delete dish " + d.get_dish_id_field().get_value());
+                                ord_contr.DelDish_from_order(d);
+                            }
                         }
-                    }
 
-                    if (!ord_contr.Check_exist_rest(ord_contr2.Get_rest().get_rest_id()))
-                    {
-                        Console.WriteLine("Change rest to " + ord_contr2.Get_rest().get_rest_id());
-                    }
+                        foreach (Dish d in ord_contr2.Get_order().get_dishes_list())
+                        {
+                            if (!ord_contr.Check_exist_dish(d.get_dish_id_field().get_value()))
+                            {
+                                Console.WriteLine("Add dish " + d.get_dish_id_field().get_value());
+                                ord_contr.Add_dish_to_order(d);
+                            }
+                        }
 
-                    if (!ord_contr.Check_exist_cust(ord_contr2.Get_cust().get_cust_id_p().get_value()))
+                        foreach (Dish d2 in ord_contr2.Get_order().get_dishes_list())
+                        {
+                            foreach (Dish d in ord_contr.Get_order().get_dishes_list())
+                            {
+                                if (String.Equals(d.get_dish_id_field().get_value(), d2.get_dish_id_field().get_value()) && !String.Equals(d.get_nmb_field().get_value(), d2.get_nmb_field().get_value()))
+                                {
+                                    Console.WriteLine("Chande col of dish " + d.get_dish_id_field().get_value() + " from " + d.get_nmb_field().get_value() + " to " + d2.get_nmb_field().get_value());
+                                    DishInfoContr dc2 = new DishInfoContr(d2);
+                                    dc2.Update_ordered(ord_contr.Get_order().get_ord_name().get_value());
+                                }
+                            }
+                        }
+
+                        if (!ord_contr.Check_exist_rest(ord_contr2.Get_rest().get_rest_id()))
+                        {
+                            Console.WriteLine("Change rest to " + ord_contr2.Get_rest().get_rest_id());
+                            ord_contr2.Get_order().get_rest_id_f().set_value(ord_contr2.Get_rest().get_rest_id());
+                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_rest_id_f());
+                        }
+
+                        if (!ord_contr.Check_exist_cust(ord_contr2.Get_cust().get_cust_id_p().get_value()))
+                        {
+                            Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
+                            ord_contr2.Get_order().get_cust_id_f().set_value(ord_contr2.Get_cust().get_cust_id_p().get_value());
+                            ord_contr.Edit_ord_field(ord_contr2.Get_order().get_cust_id_f());
+                        }
+
+                        MessageBox.Show("Заказ успешно отредактирован!");
+                        this.Close();
+                    }
+                    catch (NullReferenceException)
                     {
-                        Console.WriteLine("Change cust to " + ord_contr2.Get_cust().get_cust_id_p().get_value());
+                        MessageBox.Show("Заполните поля выбора правильно!");
+                        return;
+                    }
+                    catch(FormatException)
+                    {
+                        MessageBox.Show("В числовом поле должно быть число!");
+                        return;
+
                     }
                 }
+
             }
 
             if (String.Equals(mode, "delete"))
             {
-                ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
-                ord_contr.Delete_order();
+                try
+                {
+                    ord_contr = new OrdersInfoContr(mngr_contr.FindOrder(IdCB.Text));
+                    ord_contr.Delete_order();
+                    MessageBox.Show("Заказ успешно удален!");
+                    this.Close();
+                }
+                catch(NullReferenceException)
+                {
+                    MessageBox.Show("Выберите заказ!");
+                    return;
+                }
             }
 
         }
@@ -384,13 +497,63 @@ namespace kursovaya
                 DishCB_list[i].Text = ord_contr.Get_dish_of_order(i).get_dish_id_field().get_value() + "  " + ord_contr.Get_dish_of_order(i).get_name_field().get_value();
                 DishTB_list[i].Text = ord_contr.Get_dish_of_order(i).get_nmb_field().get_value();
             }
+
+            if(String.Equals(ord_contr.Get_order().get_status().get_value(),"Выполнено "))
+            {
+                Block_all_fields();
+            }
+            if(String.Equals(ord_contr.Get_order().get_status().get_value(), "В процессе "))
+                Enable_all_fields();
             if (String.Equals(mode, "delete"))
             {
-                for (int i = 0; i < DishCB_list.Count; i++)
-                {
-                    DishCB_list[i].Enabled = false;
-                    DishTB_list[i].Enabled = false;
-                }
+                Block_all_fields();
+            }
+        }
+
+        private void Block_all_fields()
+        {
+
+            dateTimePicker.Enabled = false;
+            CustomerCB.Enabled = false;
+            RestCB.Enabled = false;
+            addDishButton.Visible = false;
+            DelButton.Visible = false;
+            DelTextBox.Visible = false;
+            countButton.Visible = false;
+
+            for (int i = 0; i < DishCB_list.Count; i++)
+            {
+                DishCB_list[i].Enabled = false;
+                DishTB_list[i].Enabled = false;
+            }
+        }
+
+        private void Enable_all_fields()
+        {
+            dateTimePicker.Enabled = true;
+            CustomerCB.Enabled = true;
+            RestCB.Enabled = true;
+            addDishButton.Visible = true;
+            DelButton.Visible = true;
+            DelTextBox.Visible = true;
+            countButton.Visible = true;
+
+            for (int i = 0; i < DishCB_list.Count; i++)
+            {
+                DishCB_list[i].Enabled = true;
+                DishTB_list[i].Enabled = true;
+            }
+        }
+
+        private void statusLB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (String.Equals(statusLB.Text, "Выполнено "))
+            {
+                Block_all_fields();
+            }
+            if(String.Equals(statusLB.Text, "В процессе"))
+            {
+                Enable_all_fields();
             }
         }
     }

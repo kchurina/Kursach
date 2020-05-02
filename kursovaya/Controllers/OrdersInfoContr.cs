@@ -62,11 +62,19 @@ namespace kursovaya
 
         public bool Check_exist_dish(string id)
         {
+            int num = 0;
             foreach (Dish d in order.get_dishes_list())
             {
                 if (String.Equals(d.get_dish_id_field().get_value(), id))
-                    return true;
-            }
+                {
+                    num++;
+                }
+            } 
+            //если повторяется больше одного раза (первый раз мы находим ровно то же блюдо, 
+            //которое проверяем), то это другое такое же блюдо
+            if(num>1)
+                return true;
+
             return false;
         }
 

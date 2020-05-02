@@ -148,8 +148,8 @@
             this.DishListTSMItem,
             this.CustListTSMItem});
             this.ShowTSMenuItem.Name = "ShowTSMenuItem";
-            this.ShowTSMenuItem.Size = new System.Drawing.Size(128, 24);
-            this.ShowTSMenuItem.Text = "Показать из БД";
+            this.ShowTSMenuItem.Size = new System.Drawing.Size(85, 24);
+            this.ShowTSMenuItem.Text = "Показать";
             // 
             // RestListTSMItem
             // 
@@ -180,34 +180,34 @@
             this.AddRestTSMItem,
             this.AddCustTSMItem});
             this.AddTSMenuItem.Name = "AddTSMenuItem";
-            this.AddTSMenuItem.Size = new System.Drawing.Size(123, 24);
-            this.AddTSMenuItem.Text = "Добавить в БД";
+            this.AddTSMenuItem.Size = new System.Drawing.Size(88, 24);
+            this.AddTSMenuItem.Text = "Добавить";
             // 
             // AddOrderTSMItem
             // 
             this.AddOrderTSMItem.Name = "AddOrderTSMItem";
-            this.AddOrderTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddOrderTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddOrderTSMItem.Text = "Заказ";
             this.AddOrderTSMItem.Click += new System.EventHandler(this.AddOrderTSMItem_Click);
             // 
             // AddDishTSMItem
             // 
             this.AddDishTSMItem.Name = "AddDishTSMItem";
-            this.AddDishTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddDishTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddDishTSMItem.Text = "Блюдо";
             this.AddDishTSMItem.Click += new System.EventHandler(this.AddDishTSMItem_Click);
             // 
             // AddRestTSMItem
             // 
             this.AddRestTSMItem.Name = "AddRestTSMItem";
-            this.AddRestTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddRestTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddRestTSMItem.Text = "Ресторан";
             this.AddRestTSMItem.Click += new System.EventHandler(this.AddRestTSMItem_Click);
             // 
             // AddCustTSMItem
             // 
             this.AddCustTSMItem.Name = "AddCustTSMItem";
-            this.AddCustTSMItem.Size = new System.Drawing.Size(148, 26);
+            this.AddCustTSMItem.Size = new System.Drawing.Size(216, 26);
             this.AddCustTSMItem.Text = "Заказчик";
             this.AddCustTSMItem.Click += new System.EventHandler(this.AddCustTSMItem_Click);
             // 
@@ -219,34 +219,34 @@
             this.EditRestTSMI,
             this.EditCustTSIM});
             this.EditTSMenuItem.Name = "EditTSMenuItem";
-            this.EditTSMenuItem.Size = new System.Drawing.Size(146, 24);
-            this.EditTSMenuItem.Text = "Редактировать БД";
+            this.EditTSMenuItem.Size = new System.Drawing.Size(123, 24);
+            this.EditTSMenuItem.Text = "Редактировать";
             // 
             // EditOrdetTSMI
             // 
             this.EditOrdetTSMI.Name = "EditOrdetTSMI";
-            this.EditOrdetTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditOrdetTSMI.Size = new System.Drawing.Size(216, 26);
             this.EditOrdetTSMI.Text = "Заказ";
             this.EditOrdetTSMI.Click += new System.EventHandler(this.EditOrdetTSMI_Click);
             // 
             // EditDishTSMI
             // 
             this.EditDishTSMI.Name = "EditDishTSMI";
-            this.EditDishTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditDishTSMI.Size = new System.Drawing.Size(216, 26);
             this.EditDishTSMI.Text = "Блюдо";
             this.EditDishTSMI.Click += new System.EventHandler(this.EditDishTSMI_Click);
             // 
             // EditRestTSMI
             // 
             this.EditRestTSMI.Name = "EditRestTSMI";
-            this.EditRestTSMI.Size = new System.Drawing.Size(148, 26);
+            this.EditRestTSMI.Size = new System.Drawing.Size(216, 26);
             this.EditRestTSMI.Text = "Ресторан";
             this.EditRestTSMI.Click += new System.EventHandler(this.EditRestTSMI_Click);
             // 
             // EditCustTSIM
             // 
             this.EditCustTSIM.Name = "EditCustTSIM";
-            this.EditCustTSIM.Size = new System.Drawing.Size(148, 26);
+            this.EditCustTSIM.Size = new System.Drawing.Size(216, 26);
             this.EditCustTSIM.Text = "Заказчик";
             this.EditCustTSIM.Click += new System.EventHandler(this.EditCustTSIM_Click);
             // 
@@ -258,34 +258,34 @@
             this.DelRestTSMI,
             this.DelCustTCMI});
             this.DeleteTSMenuItem.Name = "DeleteTSMenuItem";
-            this.DeleteTSMenuItem.Size = new System.Drawing.Size(120, 24);
-            this.DeleteTSMenuItem.Text = "Удалить из БД";
+            this.DeleteTSMenuItem.Size = new System.Drawing.Size(77, 24);
+            this.DeleteTSMenuItem.Text = "Удалить";
             // 
             // DelOrdTSMI
             // 
             this.DelOrdTSMI.Name = "DelOrdTSMI";
-            this.DelOrdTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelOrdTSMI.Size = new System.Drawing.Size(216, 26);
             this.DelOrdTSMI.Text = "Заказ";
             this.DelOrdTSMI.Click += new System.EventHandler(this.DelOrdTSMI_Click);
             // 
             // DelDishTSMI
             // 
             this.DelDishTSMI.Name = "DelDishTSMI";
-            this.DelDishTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelDishTSMI.Size = new System.Drawing.Size(216, 26);
             this.DelDishTSMI.Text = "Блюдо";
             this.DelDishTSMI.Click += new System.EventHandler(this.DelDishTSMI_Click);
             // 
             // DelRestTSMI
             // 
             this.DelRestTSMI.Name = "DelRestTSMI";
-            this.DelRestTSMI.Size = new System.Drawing.Size(148, 26);
+            this.DelRestTSMI.Size = new System.Drawing.Size(216, 26);
             this.DelRestTSMI.Text = "Ресторан";
             this.DelRestTSMI.Click += new System.EventHandler(this.DelRestTSMI_Click);
             // 
             // DelCustTCMI
             // 
             this.DelCustTCMI.Name = "DelCustTCMI";
-            this.DelCustTCMI.Size = new System.Drawing.Size(148, 26);
+            this.DelCustTCMI.Size = new System.Drawing.Size(216, 26);
             this.DelCustTCMI.Text = "Заказчик";
             this.DelCustTCMI.Click += new System.EventHandler(this.DelCustTCMI_Click);
             // 
